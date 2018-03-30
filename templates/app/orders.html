@@ -1,0 +1,43 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/orders.css' %}">
+{% include "base.html" %}
+
+<div>
+	<table class="table table-striped">
+	    <thead>
+		    <tr>
+		        <th scope="col">S.No</th>
+		        <th scope="col">Name</th>
+		        <th scope="col">Email</th>
+		        <th scope="col">Work Description</th>
+		        <th scope="col">Work Type</th>
+		        <th scope="col">Attachments</th>
+		        <th scope="col">Approval 1</th>
+		        <th scope="col">Approver</th>
+		        <th scope="col">Approval 2</th>
+		        <th scope="col">Approval 3</th>
+		        <th scope="col">Completed</th>
+		    </tr>
+	    </thead>
+	    <tbody>
+	    	{% for order in orders %}
+
+		    <tr>
+		        <th scope="row">{{ forloop.counter }}</th>
+		      	<td>{{ order.name }}</td>
+		      	<td>{{ order.mail }}</td>
+		      	<td class="work_row">{{ order.work }}</td>
+		      	<td>{{ order.worktype }}</td>
+		      	<td><a href="/media/{{ order.file }}">{{ order.file }}</a></td>
+		      	<td>{{ order.approval1 }}</td>
+		      	<td>{{ order.prof_name }}({{ order.prof_mail }})</td>
+		      	<td>{{ order.approval2 }}</td>
+		      	<td>{{ order.approval3 }}</td>
+		      	<td>{{ order.completed }}</td>
+		    </tr>
+		    {% endfor %}
+	    </tbody>
+	</table>
+</div>
+{% include "footer.html" %}

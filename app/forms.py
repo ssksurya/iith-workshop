@@ -1,0 +1,49 @@
+from django import forms
+from .models import Order
+
+from django.contrib.auth.models import User
+
+
+class LoginForm(forms.Form):
+	username = forms.CharField(widget = forms.EmailInput(attrs=
+		{'name':"username",'id':"username",'required':'required','placeholder':"Email",'class':'form-control form-control-lg'}))
+	password = forms.CharField(widget = forms.PasswordInput(attrs=
+		{'name':'password','id':'password','class':"logininput",'placeholder':'Password','class':'form-control form-control-lg'}))
+
+class RegisterForm(forms.ModelForm):
+	password1 = forms.CharField(widget=forms.PasswordInput(attrs=
+		{'name':'password','id':'password','placeholder':'Password','class':'form-control form-control-lg'}))
+	password2 = forms.CharField(widget=forms.PasswordInput(attrs=
+		{'name':'confirm-password','id':'confirm-password','placeholder':'Confirm Password','class':'form-control form-control-lg'}))
+	username = forms.CharField(widget=forms.EmailInput(attrs=
+		{'name':"username",'id':"name",'placeholder':"Email",'class':'form-control form-control-lg'}))
+	class Meta:
+		model = User
+		fields = ['username','password1','password2']
+
+
+CHOICES=[('Student Project','Student Project'),
+         ('Sponsored Project','Sponsored Project'),
+         ('Consultancy Project','Consultancy Project')]
+
+class orderForm(forms.Form):
+	name = forms.CharField(widget = forms.TextInput(attrs=
+		{'name':"username",'id':"username",'required':'required','placeholder':"Name",'class':'form-control form-control-lg'}))
+	mail = forms.CharField(widget = forms.EmailInput(attrs=
+		{'name':'mail','id':'mail','required':'required','placeholder':"Email",'class':'form-control form-control-lg'}))
+	mobile = forms.CharField(widget = forms.NumberInput(attrs=
+		{'name':"mobile",'id':"mobile",'required':'required','placeholder':"Mobile",'class':'form-control form-control-lg'}))
+	work = forms.CharField(widget = forms.Textarea(attrs=
+		{'name':'work','id':'work','required':'required','placeholder':"Work Description",'class':'form-control form-control-lg'}))
+	worktype = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect(attrs=
+    	{'name':"worktype",'id':"worktype",'class':'form-check-input'}))
+	file = forms.FileField(widget = forms.FileInput(attrs=
+		{'name':'file','id':'file','placeholder':'Upload your file','class':'form-control form-control-lg','required':'required'}))
+	prof_name = forms.CharField(widget = forms.TextInput(attrs=
+		{'name':"prof_name",'id':"prof_name",'required':'required','placeholder':"Professor Name",'class':'form-control form-control-lg'}))
+	prof_mail = forms.CharField(widget = forms.EmailInput(attrs=
+		{'name':"prof_mail",'id':"prof_mail",'required':'required','placeholder':"Professor Email",'class':'form-control form-control-lg'}))
+	class Meta:
+		model = Order
+		fields = ['name', 'mail','mobile','work','worktype','file','prof_name','prof_mail']
+	
