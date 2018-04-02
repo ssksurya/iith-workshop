@@ -3,4 +3,15 @@
 	border: solid lightgray 3px;
 	text-align: center;
 	margin-top: 2%;
+	border-radius: 25px;
+	padding: 5%;
+}
+
+.title {
+	color: #5a5a5a;
+	text-align: center;
+}
+
+label {
+	text-align: center;
 }

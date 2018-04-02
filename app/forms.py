@@ -33,10 +33,12 @@ class orderForm(forms.Form):
 		{'name':'mail','id':'mail','required':'required','placeholder':"Email",'class':'form-control form-control-lg'}))
 	mobile = forms.CharField(widget = forms.NumberInput(attrs=
 		{'name':"mobile",'id':"mobile",'required':'required','placeholder':"Mobile",'class':'form-control form-control-lg'}))
+	title = forms.CharField(widget = forms.TextInput(attrs=
+		{'name':"title",'id':"title",'required':'required','placeholder':"Work order title",'class':'form-control form-control-lg'}))
 	work = forms.CharField(widget = forms.Textarea(attrs=
 		{'name':'work','id':'work','required':'required','placeholder':"Work Description",'class':'form-control form-control-lg'}))
 	worktype = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect(attrs=
-    	{'name':"worktype",'id':"worktype",'class':'form-check-input'}))
+    	{'name':"worktype",'id':"worktype",'class':'radio-inline'}))
 	file = forms.FileField(widget = forms.FileInput(attrs=
 		{'name':'file','id':'file','placeholder':'Upload your file','class':'form-control form-control-lg','required':'required'}))
 	prof_name = forms.CharField(widget = forms.TextInput(attrs=
@@ -46,4 +48,14 @@ class orderForm(forms.Form):
 	class Meta:
 		model = Order
 		fields = ['name', 'mail','mobile','work','worktype','file','prof_name','prof_mail']
+		
+
+CHOICES1=[('Accecpt','Accecpt'),
+		('Reject','Reject')]
+class DecisionForm(forms.Form):
+	decision = forms.ChoiceField(choices=CHOICES1, widget=forms.RadioSelect(attrs=
+    	{'name':"result",'id':"result",'class':'radio-inline'}))
+	reason = forms.CharField(required=False,widget = forms.Textarea(attrs=
+		{'name':'reason','id':'reason','placeholder':"Please mention the reason if rejected",'class':'form-control form-control-lg'}))
+
 	

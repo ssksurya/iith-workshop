@@ -1,5 +1,16 @@
 
-.work_row {
-	height: 100px;
-	overflow-y: scroll;
+.table {
+	margin-top: 2%;
+	vertical-align: middle;
+}
+
+.table td {
+	vertical-align: middle!important;
+}
+th {
+	color: #5a5a5a;
+}
+
+.alert {
+	margin-bottom: 0;
 }

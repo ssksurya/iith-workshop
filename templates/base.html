@@ -3,28 +3,47 @@
 <title>
 	IITH CWS
 </title>
+{% load static 	%}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" ></script>
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+ <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
 </head>
 <body>
-	<nav class="navbar navbar-dark bg-primary navbar-expand-lg">
-		<a class="navbar-brand" href="#">
-			<img src="https://www.iith.ac.in/html_oldIITH/images/header1234.png" style="width:80%;" class="d-inline-block align-top" alt="">
+	<nav class="navbar navbar-expand-lg">
+		<a class="navbar-brand" href="iith.ac.in">
+			<img src="https://www.iith.ac.in/wp-content/uploads/2018/02/horzlogolong.png" id ="logo" class="d-inline-block align-top" alt="">
 		</a>
+		<a class="heading" href="/"><h1>IITH CENTRAL WORKSHOP</h1></a>
 	  	
 	  	<div class="collapse navbar-collapse " id="navbarTogglerDemo01">
 	  		
 		    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 		    	<li class="nav-item active">
-		        	<a class="nav-link" href="/form">Submit Form<span class="sr-only">(current)</span></a>
+		        	<a class="nav-link" href="/form">SUBMIT ORDER<span class="sr-only">(current)</span></a>
 		      	</li>
-		      	<li class="nav-ite active">
-			     	<a class="nav-link" href="/orders">All orders</a>
+		      	<li class="nav-item active">
+			     	<a class="nav-link" href="/orders">ALL ORDERS</a>
 			     </li>
-			     <li class="nav-ite active">
-			     	<a class="nav-link" href="/login">Login</a>
+			     {% if user.is_authenticated %}
+			     <li class="nav-item active">
+			     	<a class="nav-link" href="/pending_orders">PENDING ORDERS</a>
 			     </li>
+			     <li class="nav-item active">
+			     	<a class="nav-link">{{ user.get_username }}</a>
+			     </li>
+			     {% endif %}
+			     <li class="nav-item active">
+			     	{% if user.is_authenticated %}
+						<a class="nav-link" href="/logout">LOGOUT</a>
+					{% else %}
+			     		<a class="nav-link" href="/login">LOGIN</a>
+			     	{% endif %}
+			     </li>
+
 		    </ul>
 		</div>
+
 	</nav>
+	<hr>

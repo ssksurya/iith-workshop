@@ -1,0 +1,131 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/detail.css' %}">
+{% include "base.html" %}
+
+<div class="container" style="text-align: center;margin-top: 2%;margin-bottom: 5%;">
+	<div class="form-group row">
+	    <label for="name" class="col-sm-4">NAME : </label>
+	    <div class="col-sm-8">
+	    	<p class="info">{{ order.name }}</p>
+	    </div>
+    </div>
+    <div class="form-group row">
+	    <label for="name" class="col-sm-4">EMAIL : </label>
+	    <div class="col-sm-8">
+	    	<p class="info">{{ order.mail }}</p>
+	    </div>
+    </div>
+    <div class="form-group row">
+	    <label for="name" class="col-sm-4">MOBILE : </label>
+	    <div class="col-sm-8">
+	    	<p class="info">{{ order.mobile }}</p>
+	    </div>
+    </div>
+    <div class="form-group row">
+	    <label for="name" class="col-sm-4">WORK ORDER TITLE : </label>
+	    <div class="col-sm-8">
+	    	<p class="info">{{ order.title }}</p>
+	    </div>
+    </div>
+    <div class="form-group row">
+	    <label for="name" class="col-sm-4">WORK DESCRIPTION : </label>
+	    <div class="col-sm-8">
+	    	<p class="info">{{ order.work }}</p>
+	    </div>
+    </div>
+    <div class="form-group row">
+	    <label for="name" class="col-sm-4">FILE : </label>
+	    <div class="col-sm-8">
+	    	<p class="info"><a href="{{ order.file }}">{{ order.file }}</a></p>
+	    </div>
+    </div>
+    <div class="form-group row">
+	    <label for="name" class="col-sm-4">WORK TYPE : </label>
+	    <div class="col-sm-8">
+	    	<p class="info">{{ order.worktype }}</p>
+	    </div>
+    </div>
+    <div class="form-group row">
+	    <label for="name" class="col-sm-4">REFERENCE PROFESSOR NAME : </label>
+	    <div class="col-sm-8">
+	    	<p class="info">{{ order.prof_name }}</p>
+	    </div>
+    </div>
+    <div class="form-group row">
+	    <label for="name" class="col-sm-4">REFERENCE PROFESSOR EMAIL : </label>
+	    <div class="col-sm-8">
+	    	<p class="info">{{ order.prof_mail }}</p>
+	    </div>
+    </div>
+    <div class="form-group row">
+	    <label for="name" class="col-sm-4">APPROVAL1 : </label>
+	    {% ifequal 'Pending' order.approval1 %}			      	
+      		<div class="alert alert-primary" role="alert">
+			  {{ order.approval1 }}
+			</div>					
+		{% endifequal %}
+		{% ifequal 'Accepted' order.approval1 %}
+      		<div class="alert alert-success" role="alert">
+			  {{ order.approval1 }}
+			</div>
+		{% endifequal %}
+		{% ifequal 'Rejected' order.approval1 %}
+      		<div class="alert alert-danger" role="alert">
+			  {{ order.approval1 }}
+			</div>
+		{% endifequal %}
+    </div>
+    <div class="form-group row">
+	    <label for="name" class="col-sm-4">APPROVAL2 : </label>
+	    {% ifequal 'Pending' order.approval2 %}			      	
+      		<div class="alert alert-primary" role="alert">
+			  {{ order.approval2 }}
+			</div>					
+		{% endifequal %}
+		{% ifequal 'Accepted' order.approval2 %}
+      		<div class="alert alert-success" role="alert">
+			  {{ order.approval2 }}
+			</div>
+		{% endifequal %}
+		{% ifequal 'Rejected' order.approval2 %}
+      		<div class="alert alert-danger" role="alert">
+			  {{ order.approval2 }}
+			</div>
+		{% endifequal %}
+    </div>
+    <div class="form-group row">
+	    <label for="name" class="col-sm-4">APPROVAL3 : </label>
+	    {% ifequal 'Pending' order.approval3 %}			      	
+      		<div class="alert alert-primary" role="alert">
+			  {{ order.approval2 }}
+			</div>					
+		{% endifequal %}
+		{% ifequal 'Accepted' order.approval3 %}
+      		<div class="alert alert-success" role="alert">
+			  {{ order.approval2 }}
+			</div>
+		{% endifequal %}
+		{% ifequal 'Rejected' order.approval3 %}
+      		<div class="alert alert-danger" role="alert">
+			  {{ order.approval2 }}
+			</div>
+		{% endifequal %}
+    </div>
+    {% ifequal "Rejected" order.approval3 %}
+    <div class="form-group row">
+	    <label for="name" class="col-sm-4">REASON FOR REJECTION : </label>
+	    <div class="col-sm-8">
+	    	<p class="info">{{ order.reason }}</p>
+	    </div>
+    </div>
+    {% endifequal %}
+    <div class="form-group row">
+	 	<div class="col-sm-12">
+		   	<a href="/orders"><button class="btn btn-lg">BACK</button></a>
+		</div>
+    </div>
+
+</div>
+
+{% include "footer.html" %}

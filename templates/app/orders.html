@@ -3,38 +3,100 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/orders.css' %}">
 {% include "base.html" %}
 
-<div>
-	<table class="table table-striped">
+<div style="width: 80%;margin: auto;">
+	<table class="table">
 	    <thead>
 		    <tr>
 		        <th scope="col">S.No</th>
-		        <th scope="col">Name</th>
-		        <th scope="col">Email</th>
-		        <th scope="col">Work Description</th>
-		        <th scope="col">Work Type</th>
-		        <th scope="col">Attachments</th>
-		        <th scope="col">Approval 1</th>
-		        <th scope="col">Approver</th>
-		        <th scope="col">Approval 2</th>
-		        <th scope="col">Approval 3</th>
-		        <th scope="col">Completed</th>
+		        <th scope="col">NAME</th>
+		        <th scope="col">EMAIL</th>
+		        <th scope="col">TITLE</th>
+		        <th scope="col">APPROVER</th>
+		        <th scope="col">APPROVAL 1</th>
+		        <th scope="col">APPROVAL 2</th>
+		        <th scope="col">APPROVAL 3</th>
+		        <th scope="col">DETAILS</th>
 		    </tr>
 	    </thead>
 	    <tbody>
 	    	{% for order in orders %}
 
 		    <tr>
-		        <th scope="row">{{ forloop.counter }}</th>
+		        <td>{{ forloop.counter }}</td>
 		      	<td>{{ order.name }}</td>
 		      	<td>{{ order.mail }}</td>
-		      	<td class="work_row">{{ order.work }}</td>
-		      	<td>{{ order.worktype }}</td>
-		      	<td><a href="/media/{{ order.file }}">{{ order.file }}</a></td>
-		      	<td>{{ order.approval1 }}</td>
-		      	<td>{{ order.prof_name }}({{ order.prof_mail }})</td>
-		      	<td>{{ order.approval2 }}</td>
-		      	<td>{{ order.approval3 }}</td>
-		      	<td>{{ order.completed }}</td>
+		      	<td>{{ order.title }}</td>		      	
+		      	<td>{{ order.prof_name }} ({{ order.prof_mail }})</td>
+		      	
+		      	{% ifequal 'Pending' order.approval1 %}
+			      	<td>
+			      		<div class="alert alert-primary" role="alert">
+						  {{ order.approval1 }}
+						</div>
+					</td>
+				{% endifequal %}
+				{% ifequal 'Accepted' order.approval1 %}
+			      	<td>
+			      		<div class="alert alert-success" role="alert">
+						  {{ order.approval1 }}
+						</div>
+					</td>
+				{% endifequal %}
+				{% ifequal 'Rejected' order.approval1 %}
+			      	<td>
+			      		<div class="alert alert-danger" role="alert">
+						  {{ order.approval1 }}
+						</div>
+					</td>
+				{% endifequal %}
+
+				{% ifequal 'Pending' order.approval2 %}
+			      	<td>
+			      		<div class="alert alert-primary" role="alert">
+						  {{ order.approval2 }}
+						</div>
+					</td>
+				{% endifequal %}
+				{% ifequal 'Accepted' order.approval2 %}
+			      	<td>
+			      		<div class="alert alert-success" role="alert">
+						  {{ order.approval2 }}
+						</div>
+					</td>
+				{% endifequal %}
+				{% ifequal 'Rejected' order.approval2 %}
+			      	<td>
+			      		<div class="alert alert-danger" role="alert">
+						  {{ order.approval2 }}
+						</div>
+					</td>
+				{% endifequal %}
+
+				{% ifequal 'Pending' order.approval3 %}
+			      	<td>
+			      		<div class="alert alert-primary" role="alert">
+						  {{ order.approval3 }}
+						</div>
+					</td>
+				{% endifequal %}
+				{% ifequal 'Accepted' order.approval3 %}
+			      	<td>
+			      		<div class="alert alert-success" role="alert">
+						  {{ order.approval3 }}
+						</div>
+					</td>
+				{% endifequal %}
+				{% ifequal 'Rejected' order.approval3 %}
+			      	<td>
+			      		<div class="alert alert-danger" role="alert">
+						  {{ order.approval3 }}
+						</div>
+					</td>
+				{% endifequal %}
+				<td>
+					<a href="/detail/{{ order.id }}">Details</a>
+					
+				</td>
 		    </tr>
 		    {% endfor %}
 	    </tbody>

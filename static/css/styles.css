@@ -1,0 +1,80 @@
+
+
+body {
+	font-family: 'Roboto', sans-serif;
+}
+
+hr {
+	margin: 0;
+}
+
+a {
+	text-decoration: none;
+	transition-duration: 1s;
+}
+
+a:hover {
+	text-decoration: none;
+	color: inherit;
+	transition-duration: : 1s
+}
+
+.navbar {
+}
+
+.navbar-brand {
+	width:30%;
+	margin-left: 1%;
+}
+.collapse {
+	width:40%;
+	text-align: center;
+}
+#logo {
+	width: 70%;
+	padding: 0;
+	margin: 0;
+}
+
+.nav-link {
+	text-decoration: none;
+	color: #5a5a5a;
+	transition-duration: 0.5s;
+	border:solid white 2px;
+	outline: none;
+	
+}
+
+.nav-link:hover {
+	color: black;
+	border-right: 2px #5a5a5a solid;
+	border-left: 2px #5a5a5a solid;
+	transition-duration: 0.5s;
+	outline: none;
+}
+
+.heading {
+	width: 40%;
+	color: #5a5a5a;
+	font-weight: bold;
+	margin: 1%;
+	text-align: center;
+}
+
+label {
+	font-size:1.25rem;
+	padding: 0.5rem;
+	text-align: right;
+	color: #5a5a5a;
+}
+
+.btn:hover {
+	color: black;
+	transition-duration: 0.5s;
+	border: solid #5a5a5a 1px;
+}
+
+.btn {
+	border: solid #ffffff 1px;
+	transition-duration: 0.5s;
+}

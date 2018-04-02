@@ -1,9 +1,9 @@
 
-.form-check-input li {
+.radio-inline {
+	list-style-type: none;
 	display: inline;
-	background-color: red;
 }
 
-body {
-	background-color: red;
+.radio-inline li  {
+	display: inline;
 }
