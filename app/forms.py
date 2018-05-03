@@ -52,10 +52,20 @@ class orderForm(forms.Form):
 
 CHOICES1=[('Accecpt','Accecpt'),
 		('Reject','Reject')]
+
 class DecisionForm(forms.Form):
 	decision = forms.ChoiceField(choices=CHOICES1, widget=forms.RadioSelect(attrs=
     	{'name':"result",'id':"result",'class':'radio-inline'}))
 	reason = forms.CharField(required=False,widget = forms.Textarea(attrs=
 		{'name':'reason','id':'reason','placeholder':"Please mention the reason if rejected",'class':'form-control form-control-lg'}))
+
+CHOICES2=[('Yes','Yes'),
+		('No','No')]
+
+class StatusForm(forms.Form):
+	status_input = forms.CharField(required=True,widget = forms.Textarea(attrs=
+		{'name':'status_input','id':'status_input','placeholder':"Please enter the status here",'class':'form-control form-control-lg'}))
+	completed_input = forms.ChoiceField(choices=CHOICES2, widget=forms.RadioSelect(attrs=
+    	{'name':"completed_input",'id':"completed_input",'class':'radio-inline'}))
 
 	

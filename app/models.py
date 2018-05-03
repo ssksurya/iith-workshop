@@ -30,5 +30,10 @@ class Approver(models.Model):
 	approver2 = models.TextField(max_length=100)
 	approver3 = models.TextField(max_length=100)
 
+class Status(models.Model):
+	order = models.IntegerField()
+	status_text = models.TextField(max_length=1000,blank=True)
+	uploaded_at = models.DateTimeField(auto_now_add=True)
+
 	
 

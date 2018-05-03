@@ -2,6 +2,7 @@
 .table {
 	margin-top: 2%;
 	vertical-align: middle;
+	text-align: center;
 }
 
 .table td {
@@ -12,5 +13,5 @@ th {
 }
 
 .alert {
-	margin-bottom: 0;
+	margin-bottom: 0!important;
 }

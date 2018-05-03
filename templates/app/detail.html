@@ -112,6 +112,28 @@
 			</div>
 		{% endifequal %}
     </div>
+    {% if status_list %}
+    {% for status in status_list %}
+    <div class="form-group row">
+	    <label for="name" class="col-sm-4">STATUS 1 : </label>
+	    <div class="col-sm-8">
+	    	<p class="info">{{ status.status_text }}</p>
+	    </div>
+    </div>
+    {% endfor %}
+    <div class="form-group row">
+	    <label for="name" class="col-sm-4">COMPLETED : </label>
+	    <div class="col-mg-8">
+		    <div>
+		    	{% if order.completed %}
+		    	<div class="alert alert-success" role="alert">Yes</div>
+		    	{% else %}
+		    	<div class="alert alert-danger" role="alert">No</div>
+		    	{% endif %}
+		    </div>
+		</div>
+    </div>
+    {% endif %}
     {% ifequal "Rejected" order.approval3 %}
     <div class="form-group row">
 	    <label for="name" class="col-sm-4">REASON FOR REJECTION : </label>

@@ -2,14 +2,7 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'css/orders.css' %}">
 {% include "base.html" %}
-<h2 style="text-align: center;margin-top: 2%;color: #5a5a5a">{{ category }}</h2>
-<div class="container" style="width: 80%;margin-top: 1%;">
-	<a href="/orders" ><button class="btn btn-lg">ALL ORDERS</button></a>
-	<a href="/pending_orders"><button class="btn btn-lg">PENDING ORDERS</button></a>
-	<a href="/approved_orders"><button class="btn btn-lg">APPROVED ORDERS</button></a>
-	<a href="/completed_orders"><button class="btn btn-lg">COMPLETED ORDERS</button></a>
-	<a href="/rejected_orders"><button class="btn btn-lg">REJECTED ORDERS</button></a>
-</div>
+<h2 style="text-align: center;margin-top: 2%;color: #5a5a5a">APPROVED ORDERS</h2>
 <div style="width: 80%;margin: auto;">
 	<table class="table">
 	    <thead>
@@ -22,7 +15,7 @@
 		        <th scope="col">APPROVAL 1</th>
 		        <th scope="col">APPROVAL 2</th>
 		        <th scope="col">APPROVAL 3</th>
-		        <th scope="col">DETAILS</th>
+		        <th scope="col">STATUS</th>
 		    </tr>
 	    </thead>
 	    <tbody>
@@ -102,7 +95,7 @@
 					</td>
 				{% endifequal %}
 				<td>
-					<a href="/detail/{{ order.id }}">Details</a>
+					<a href="/update_status/{{ order.id }}">Update status</a>
 					
 				</td>
 		    </tr>
