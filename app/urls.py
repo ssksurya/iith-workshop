@@ -21,4 +21,6 @@ urlpatterns = [
 	url(r'^order_decision/(?P<order_id>[0-9]+)/$',views.decision_input),
 	url(r'^decision/(?P<order_id>[0-9]+)/$', views.decision),
 	url(r'^update_status/(?P<order_id>[0-9]+)/$', views.update_status),
+	url(r'^order_decision/(?P<order_id>[0-9]+)/(?P<prof_hash>[0-9A-Za-z_\-]+)/$',views.prof_decision_form),
+	url(r'^decision/(?P<order_id>[0-9]+)/(?P<prof_hash>[0-9A-Za-z_\-]+)$', views.prof_decision),
 ]

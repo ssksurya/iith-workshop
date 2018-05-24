@@ -10,6 +10,10 @@ from .models import Order, Approver , Status
 
 from django.contrib.auth.models import User
 from django.utils.timezone import localtime, now
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.core.mail import EmailMessage
+import hashlib
 # Create your views here.
 
 def index(request):
@@ -35,41 +39,59 @@ def order(request):
 				new_object.file = request.FILES['file']
 				new_object.uploaded_at = localtime(now())
 				new_object.save()
-				return render(request,'app/index.html')
+				order = Order.objects.get(name=data['name'],title = data['title'],prof_mail = data['prof_mail'])
+				try:
+					current_site = get_current_site(request)
+					hash_object = hashlib.md5(order.prof_mail)
+					message =  "Dear Sir/Madam \r\n\r\n You have a Workshop order to approve.Please click on the link below to find detials and approve it. \r\n\r\n" + current_site.domain + '/' + 'order_decision' +'/' + str(order.id) + '/' + hash_object.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
+					mail_subject = 'IITH Workshop Workorder Approval'
+					to_email = data['prof_mail']
+					email = EmailMessage(mail_subject, message, to=[to_email])
+					email.send()
+				except Exception,e:
+					print str(e)
+					order = Order.objects.get(name=data['name'],title = data['title'],prof_mail = data['prof_mail'])
+					order.delete()
+					message = "There is something wrong.Try again later"
+					return render(request,'app/form.html',{'form':form,'message':message})
+				return HttpResponseRedirect("/")
 			except Exception as e:
-				return render(request,'app/form.html',{'form':form})
+				print e
+				message = "There is something wrong.Try again later"
+				return render(request,'app/form.html',{'form':form,'message':message})
 		else:
+			message = "There is something wrong with your form.Try again"
 			return render(request,'app/form.html',{'form':form})
 	else:
 		form = orderForm() 
 		return render(request,'app/form.html',{'form':form})
 
 def all_orders(request):
-	orders = Order.objects.all()
+	orders = Order.objects.all().order_by('-uploaded_at')
 	category = "ALL ORDERS"
 	return render(request,'app/orders.html',{'orders':orders,'category':category})
 
 def pending_orders(request):
-	orders = Order.objects.filter(approval3="Pending")
+	orders = Order.objects.filter(approval3="Pending").order_by('-uploaded_at')
 	category = "PENDING ORDERS"
 	return render(request,'app/orders.html',{'orders':orders,'category':category})
 
 def approved_orders(request):
-	orders = Order.objects.filter(approval3="Accepted")
+	orders = Order.objects.filter(approval3="Accepted").order_by('-uploaded_at')
 	category = "APPROVED ORDERS"
 	return render(request,'app/orders.html',{'orders':orders,'category':category})
 
 def status_list(request):
-	orders = Order.objects.filter(approval3="Accepted",completed=False)
+	orders = Order.objects.filter(approval3="Accepted",completed=False).order_by('-uploaded_at')
 	return render(request,'app/status_list.html',{'orders':orders})
 
 def rejected_orders(request):
-	orders = Order.objects.filter(approval3="Rejected")
+	orders = Order.objects.filter(approval3="Rejected").order_by('-uploaded_at')
 	category = "REJECTED ORDERS"
 	return render(request,'app/orders.html',{'orders':orders,'category':category})
 
 def completed_orders(request):
-	orders = Order.objects.filter(completed=True)
+	orders = Order.objects.filter(completed=True).order_by('-uploaded_at')
 	category = "COMPLETED ORDERS"
 	return render(request,'app/orders.html',{'orders':orders,'category':category})
 
@@ -138,19 +160,19 @@ def approve_orders(request):
 		approver = approver[0]
 		if (user.username == approver.approver2):
 			try:
-				orders = Order.objects.filter(approval1 = 'Accepted',approval2='Pending')
+				orders = Order.objects.filter(approval1 = 'Accepted',approval2='Pending').order_by('-uploaded_at')
 			except:
 				orders=[]
 			return render(request,'app/approve_orders.html',{'orders':orders})
 		elif (user.username == approver.approver3):
 			try:
-				orders = Order.objects.filter(approval1 = 'Accepted',approval2='Accepted',approval3='Pending')
+				orders = Order.objects.filter(approval1 = 'Accepted',approval2='Accepted',approval3='Pending').order_by('-uploaded_at')
 			except:
 				orders=[]
 			return render(request,'app/approve_orders.html',{'orders':orders})
 		else:
 			try:
-				orders = Order.objects.filter(prof_mail=user.username,approval1 = 'Pending')
+				orders = Order.objects.filter(prof_mail=user.username,approval1 = 'Pending').order_by('-uploaded_at')
 			except:
 				orders=[]
 			return render(request,'app/approve_orders.html',{'orders':orders})
@@ -163,15 +185,16 @@ def decision_input(request,order_id):
 		order = Order.objects.get(id=order_id)
 		approver = Approver.objects.all()
 		approver = approver[0]
+		prof_hash = ""
 		if (order.approval1 == 'Pending' and order.prof_mail == user.username ):
 			decisionform = DecisionForm()
-			return render(request,'app/decision.html',{'order':order,'decisionform':decisionform})
+			return render(request,'app/decision.html',{'order':order,'decisionform':decisionform,'prof_hash':prof_hash})
 		elif (order.approval1 == 'Accepted' and approver.approver2 == user.username ):
 			decisionform = DecisionForm()
-			return render(request,'app/decision.html',{'order':order,'decisionform':decisionform})
+			return render(request,'app/decision.html',{'order':order,'decisionform':decisionform,'prof_hash':prof_hash})
 		elif (order.approval1 == 'Accepted' and order.approval2 == 'Accepted' and approver.approver3 == user.username):
 			decisionform = DecisionForm()
-			return render(request,'app/decision.html',{'order':order,'decisionform':decisionform})
+			return render(request,'app/decision.html',{'order':order,'decisionform':decisionform,'prof_hash':prof_hash})
 		else:
 			return HttpResponseRedirect("/approve_orders")
 	else:
@@ -270,6 +293,41 @@ def update_status(request,order_id):
 			return render(request,'app/status_form.html',{'statusform':statusform,'order':order})
 	else:
 		return HttpResponseRedirect("/login")
+
+
+def prof_decision_form(request,order_id,prof_hash):
+	order = Order.objects.get(id= order_id)
+	hash_object = hashlib.md5(order.prof_mail)
+	if hash_object.hexdigest() == prof_hash:
+		if order.approval1 == 'Pending':
+			decisionform = DecisionForm()
+			return render(request,'app/decision.html',{'order':order,'decisionform':decisionform,'prof_hash':prof_hash})
+		else:
+			return HttpResponseRedirect("/orders")
+	else:
+		return HttpResponse("Something wrong")
+
+def prof_decision(request,order_id,prof_hash):
+	order = Order.objects.get(id= order_id)
+	decisionform = DecisionForm(request.POST)
+	if decisionform.is_valid():
+		data = decisionform.cleaned_data
+		decision = data['decision']
+		if decision == "Reject":
+			reason = data['reason']
+			order.approval1 = 'Rejected'
+			order.approval2 = 'Rejected'
+			order.approval3 = 'Rejected'
+			order.reason = reason
+		else:
+			order.approval1 = 'Accepted'
+			order.save()
+		order.save()
+		return render(request,'app/recorded.html')
+	else:
+		return render(request,'app/decision.html',{'order':order,'decisionform':decisionform,'prof_hash':prof_hash})
+
+
 
 
 

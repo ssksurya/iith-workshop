@@ -4,6 +4,11 @@
 {% include "base.html" %}
 
 <div class="container" style="text-align: center;margin-top: 2%;margin-bottom: 5%;">
+	{% if message %}
+		<div class="alert alert-danger" style="width: 100%">
+		  {{ message }}
+		</div>
+	{% endif %}
 	<form action="/form" method="post" enctype="multipart/form-data">
 		{% csrf_token %}
 		<div class="form-group row">
