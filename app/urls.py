@@ -12,6 +12,7 @@ urlpatterns = [
 	url(r'^completed_orders$', views.completed_orders),
 	url(r'^rejected_orders$', views.rejected_orders),
 	url(r'^status_list$', views.status_list),
+	url(r'^details/(?P<order_id>[0-9]+)/(?P<mail_hash>[0-9A-Za-z_\-]+)$', views.detail_hash),
 	url(r'^login$', views.login_menu),
 	url(r'^do_login$', views.do_login),
 	url(r'^do_register$', views.do_register),
@@ -23,5 +24,5 @@ urlpatterns = [
 	url(r'^update_status/(?P<order_id>[0-9]+)/$', views.update_status),
 	url(r'^order_decision/(?P<order_id>[0-9]+)/(?P<prof_hash>[0-9A-Za-z_\-]+)/$',views.prof_decision_form),
 	url(r'^decision/(?P<order_id>[0-9]+)/(?P<prof_hash>[0-9A-Za-z_\-]+)$', views.prof_decision),
-	url(r'^details/(?P<order_id>[0-9]+)/(?P<mail_hash>[0-9A-Za-z_\-]+)$', views.detail_hash),
+
 ]
