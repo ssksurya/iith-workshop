@@ -57,7 +57,7 @@ class DecisionForm(forms.Form):
 	decision = forms.ChoiceField(choices=CHOICES1, widget=forms.RadioSelect(attrs=
     	{'name':"result",'id':"result",'class':'radio-inline'}))
 	remarks = forms.CharField(required=False,widget = forms.Textarea(attrs=
-		{'name':'remarks','id':'remarks','placeholder':"Reamarks",'class':'form-control form-control-lg'}))
+		{'name':'remarks','id':'remarks','placeholder':"Remarks",'class':'form-control form-control-lg'}))
 
 CHOICES2=[('Yes','Yes'),
 		('No','No')]
