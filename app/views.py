@@ -231,7 +231,7 @@ def decision(request,order_id):
 					hash_mail = hashlib.md5(order.mail)
 					message =  "Hello \r\n\r\n Your Workshop order is rejected by Central Workshop.Please use below link to find detials and track your order status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
 					mail_subject = 'IITH Workshop Workorder'
-					to_email = data['mail']
+					to_email = order.mail
 					email = EmailMessage(mail_subject, message, to=[to_email])
 					email.send()
 				else:
@@ -243,7 +243,7 @@ def decision(request,order_id):
 					hash_mail = hashlib.md5(order.mail)
 					message =  "Hello \r\n\r\n Your Workshop order is approved by Central Workshop Staff.Please use below link to find detials and track your order status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
 					mail_subject = 'IITH Workshop Workorder'
-					to_email = data['mail']
+					to_email = order.mail
 					email = EmailMessage(mail_subject, message, to=[to_email])
 					email.send()
 				order.save()
@@ -263,7 +263,7 @@ def decision(request,order_id):
 					hash_mail = hashlib.md5(order.mail)
 					message =  "Hello \r\n\r\n Your Workshop order is rejected by Central Workshop Faculty Team.Please use below link to find detials and track your order status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
 					mail_subject = 'IITH Workshop Workorder'
-					to_email = data['mail']
+					to_email = order.mail
 					email = EmailMessage(mail_subject, message, to=[to_email])
 					email.send()
 				else:
@@ -275,7 +275,7 @@ def decision(request,order_id):
 					hash_mail = hashlib.md5(order.mail)
 					message =  "Hello \r\n\r\n Your Workshop order is approved by Central Workshop Faculty Team.Please use below link to find detials and track your order status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
 					mail_subject = 'IITH Workshop Workorder'
-					to_email = data['mail']
+					to_email = order.mail
 					email = EmailMessage(mail_subject, message, to=[to_email])
 					email.send()
 				order.save()
@@ -326,7 +326,7 @@ def update_status(request,order_id):
 					hash_mail = hashlib.md5(order.mail)
 					message =  "Hello \r\n\r\n Your Workshop order has been completed.Please use below link to find detials and track your order status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
 					mail_subject = 'IITH Workshop Workorder'
-					to_email = data['mail']
+					to_email = order.mail
 					email = EmailMessage(mail_subject, message, to=[to_email])
 					email.send()
 				else:
@@ -335,7 +335,7 @@ def update_status(request,order_id):
 					hash_mail = hashlib.md5(order.mail)
 					message =  "Hello \r\n\r\n There is a update on your Workshop Order.Please use below link to find detials and track your order status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
 					mail_subject = 'IITH Workshop Workorder'
-					to_email = data['mail']
+					to_email = order.mail
 					email = EmailMessage(mail_subject, message, to=[to_email])
 					email.send()
 				new_object.save()
@@ -378,7 +378,7 @@ def prof_decision(request,order_id,prof_hash):
 			hash_mail = hashlib.md5(order.mail)
 			message =  "Hello \r\n\r\n Your Workshop order is rejected by your reference professor.Please use below link to find detials and track your order status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
 			mail_subject = 'IITH Workshop Workorder'
-			to_email = data['mail']
+			to_email = order.mail
 			email = EmailMessage(mail_subject, message, to=[to_email])
 			email.send()
 		else:
@@ -388,7 +388,7 @@ def prof_decision(request,order_id,prof_hash):
 			hash_mail = hashlib.md5(order.mail)
 			message =  "Hello \r\n\r\n Your Workshop order is approved by your reference professor.Please use below link to find detials and track your order status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
 			mail_subject = 'IITH Workshop Workorder'
-			to_email = data['mail']
+			to_email = order.mail
 			email = EmailMessage(mail_subject, message, to=[to_email])
 			email.send()
 		order.save()
