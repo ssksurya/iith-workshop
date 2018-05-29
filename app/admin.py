@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.contrib import admin
-from .models import Order, Approver
+from .models import Order, Approver, Status
 # Register your models here.
 
 class DisplayOrder(admin.ModelAdmin):
@@ -11,5 +11,9 @@ class DisplayOrder(admin.ModelAdmin):
 class DisplayApprover(admin.ModelAdmin):
 	list_display = ('approver2','approver3')
 
+class DisplayStatus(admin.ModelAdmin):
+	list_display = ('order','status_text')
+
 admin.site.register(Order, DisplayOrder)
 admin.site.register(Approver, DisplayApprover)
+admin.site.register(Status, DisplayStatus)
