@@ -219,8 +219,8 @@ def decision(request,order_id):
 		approver = approver[0]
 		if (user.username == approver.approver2 and order.approval1=='Accepted'):
 			decisionform = DecisionForm(request.POST)
-			data = decisionform.cleaned_data
 			if decisionform.is_valid():
+				data = decisionform.cleaned_data
 				decision = data['decision']
 				if decision == "Reject":
 					reason = data['reason']
@@ -234,6 +234,7 @@ def decision(request,order_id):
 					email = EmailMessage(mail_subject, message, to=[to_email])
 					email.send()
 				else:
+					data = decisionform.cleaned_data
 					reason = data['reason']
 					order.reason = reason
 					order.approval2 = 'Accepted'
@@ -263,6 +264,7 @@ def decision(request,order_id):
 					email = EmailMessage(mail_subject, message, to=[to_email])
 					email.send()
 				else:
+					data = decisionform.cleaned_data
 					reason = data['reason']
 					order.reason = reason
 					order.approval3 = 'Accepted'
@@ -278,8 +280,8 @@ def decision(request,order_id):
 				return render(request,'app/decision.html',{'order':order,'decisionform':decisionform})
 		elif(user.username == order.prof_mail and order.approval1 == 'Pending'):
 			decisionform = DecisionForm(request.POST)
-			data = decisionform.cleaned_data
 			if decisionform.is_valid():
+				data = decisionform.cleaned_data
 				decision = data['decision']
 				if decision == "Reject":
 					reason = data['reason']
@@ -288,6 +290,7 @@ def decision(request,order_id):
 					order.approval3 = 'Rejected'
 					order.reason = reason
 				else:
+					data = decisionform.cleaned_data
 					reason = data['reason']
 					order.reason = reason
 					order.approval1 = 'Accepted'
