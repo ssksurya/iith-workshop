@@ -234,6 +234,7 @@ def decision(request,order_id):
 					email = EmailMessage(mail_subject, message, to=[to_email])
 					email.send()
 				else:
+					reason = data['reason']
 					order.reason = reason
 					order.approval2 = 'Accepted'
 					hash_mail = hashlib.md5(order.mail)
@@ -262,6 +263,7 @@ def decision(request,order_id):
 					email = EmailMessage(mail_subject, message, to=[to_email])
 					email.send()
 				else:
+					reason = data['reason']
 					order.reason = reason
 					order.approval3 = 'Accepted'
 					hash_mail = hashlib.md5(order.mail)
@@ -286,6 +288,7 @@ def decision(request,order_id):
 					order.approval3 = 'Rejected'
 					order.reason = reason
 				else:
+					reason = data['reason']
 					order.reason = reason
 					order.approval1 = 'Accepted'
 				order.save()
