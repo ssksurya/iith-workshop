@@ -12,7 +12,7 @@ STATUS_CHOICES = (
 class Order(models.Model):
 	name = models.TextField(max_length=100,blank=True)
 	mail = models.TextField(max_length=100,blank=True)
-	mobile = models.IntegerField()
+	mobile = models.BigIntegerField()
 	work = models.TextField(max_length=500,blank=True)
 	worktype = models.TextField(max_length=20,blank=True)
 	title = models.TextField(max_length=100,blank=True)
