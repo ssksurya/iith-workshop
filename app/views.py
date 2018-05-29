@@ -227,6 +227,7 @@ def decision(request,order_id):
 					order.approval2 = 'Rejected'
 					order.approval3 = 'Rejected'
 					order.reason = reason
+					current_site = get_current_site(request)
 					hash_mail = hashlib.md5(order.mail)
 					message =  "Hello \r\n\r\n Your Workshop order is rejected by Central Workshop.Please use below link to find detials and track your order status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
 					mail_subject = 'IITH Workshop Workorder'
@@ -238,6 +239,7 @@ def decision(request,order_id):
 					reason = data['reason']
 					order.reason = reason
 					order.approval2 = 'Accepted'
+					current_site = get_current_site(request)
 					hash_mail = hashlib.md5(order.mail)
 					message =  "Hello \r\n\r\n Your Workshop order is approved by Central Workshop Staff.Please use below link to find detials and track your order status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
 					mail_subject = 'IITH Workshop Workorder'
@@ -257,6 +259,7 @@ def decision(request,order_id):
 					reason = data['reason']
 					order.approval3 = 'Rejected'
 					order.reason = reason
+					current_site = get_current_site(request)
 					hash_mail = hashlib.md5(order.mail)
 					message =  "Hello \r\n\r\n Your Workshop order is rejected by Central Workshop Faculty Team.Please use below link to find detials and track your order status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
 					mail_subject = 'IITH Workshop Workorder'
@@ -268,6 +271,7 @@ def decision(request,order_id):
 					reason = data['reason']
 					order.reason = reason
 					order.approval3 = 'Accepted'
+					current_site = get_current_site(request)
 					hash_mail = hashlib.md5(order.mail)
 					message =  "Hello \r\n\r\n Your Workshop order is approved by Central Workshop Faculty Team.Please use below link to find detials and track your order status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
 					mail_subject = 'IITH Workshop Workorder'
@@ -318,6 +322,7 @@ def update_status(request,order_id):
 				new_object.status_text = status_input
 				if completed_input=="Yes":
 					order.completed = True
+					current_site = get_current_site(request)
 					hash_mail = hashlib.md5(order.mail)
 					message =  "Hello \r\n\r\n Your Workshop order has been completed.Please use below link to find detials and track your order status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
 					mail_subject = 'IITH Workshop Workorder'
@@ -326,6 +331,7 @@ def update_status(request,order_id):
 					email.send()
 				else:
 					order.completed = False
+					current_site = get_current_site(request)
 					hash_mail = hashlib.md5(order.mail)
 					message =  "Hello \r\n\r\n There is a update on your Workshop Order.Please use below link to find detials and track your order status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
 					mail_subject = 'IITH Workshop Workorder'
@@ -368,6 +374,7 @@ def prof_decision(request,order_id,prof_hash):
 			order.approval2 = 'Rejected'
 			order.approval3 = 'Rejected'
 			order.reason = reason
+			current_site = get_current_site(request)
 			hash_mail = hashlib.md5(order.mail)
 			message =  "Hello \r\n\r\n Your Workshop order is rejected by your reference professor.Please use below link to find detials and track your order status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
 			mail_subject = 'IITH Workshop Workorder'
@@ -377,6 +384,7 @@ def prof_decision(request,order_id,prof_hash):
 		else:
 			order.reason = reason
 			order.approval1 = 'Accepted'
+			current_site = get_current_site(request)
 			hash_mail = hashlib.md5(order.mail)
 			message =  "Hello \r\n\r\n Your Workshop order is approved by your reference professor.Please use below link to find detials and track your order status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
 			mail_subject = 'IITH Workshop Workorder'
