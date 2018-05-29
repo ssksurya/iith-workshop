@@ -24,7 +24,9 @@ class Order(models.Model):
 	approval2 = models.CharField(max_length=10, choices=STATUS_CHOICES,default='Pending')
 	approval3 = models.CharField(max_length=10, choices=STATUS_CHOICES,default='Pending')
 	completed = models.BooleanField(default=False)
-	reason = models.TextField(max_length=1000,blank=True)
+	remarks1 = models.TextField(max_length=1000,blank=True)
+	remarks2 = models.TextField(max_length=1000,blank=True)
+	remarks3 = models.TextField(max_length=1000,blank=True)
 
 class Approver(models.Model):
 	approver2 = models.TextField(max_length=100)

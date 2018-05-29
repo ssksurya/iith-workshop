@@ -222,11 +222,11 @@ def decision(request,order_id):
 			if decisionform.is_valid():
 				data = decisionform.cleaned_data
 				decision = data['decision']
-				if decision == "Reject":
-					reason = data['reason']
+				remarks = data['remarks']
+				if decision == "Reject":					
 					order.approval2 = 'Rejected'
 					order.approval3 = 'Rejected'
-					order.reason = reason
+					order.remarks2 = remarks
 					current_site = get_current_site(request)
 					hash_mail = hashlib.md5(order.mail)
 					message =  "Hello \r\n\r\n Your Workshop order is rejected by Central Workshop.Please use below link to find detials and track your order status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
@@ -236,8 +236,7 @@ def decision(request,order_id):
 					email.send()
 				else:
 					data = decisionform.cleaned_data
-					reason = data['reason']
-					order.reason = reason
+					order.remarks2 = remarks
 					order.approval2 = 'Accepted'
 					current_site = get_current_site(request)
 					hash_mail = hashlib.md5(order.mail)
@@ -255,10 +254,10 @@ def decision(request,order_id):
 			if decisionform.is_valid():
 				data = decisionform.cleaned_data
 				decision = data['decision']
+				remarks = data['remarks']
 				if decision == "Reject":
-					reason = data['reason']
 					order.approval3 = 'Rejected'
-					order.reason = reason
+					order.remarks3 = remarks
 					current_site = get_current_site(request)
 					hash_mail = hashlib.md5(order.mail)
 					message =  "Hello \r\n\r\n Your Workshop order is rejected by Central Workshop Faculty Team.Please use below link to find detials and track your order status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
@@ -268,8 +267,8 @@ def decision(request,order_id):
 					email.send()
 				else:
 					data = decisionform.cleaned_data
-					reason = data['reason']
-					order.reason = reason
+					remarks3 = data['remarks']
+					order.remarks = remarks
 					order.approval3 = 'Accepted'
 					current_site = get_current_site(request)
 					hash_mail = hashlib.md5(order.mail)
@@ -288,15 +287,15 @@ def decision(request,order_id):
 				data = decisionform.cleaned_data
 				decision = data['decision']
 				if decision == "Reject":
-					reason = data['reason']
+					remarks = data['remarks']
 					order.approval1 = 'Rejected'
 					order.approval2 = 'Rejected'
 					order.approval3 = 'Rejected'
-					order.reason = reason
+					order.remarks = remarks
 				else:
 					data = decisionform.cleaned_data
-					reason = data['reason']
-					order.reason = reason
+					remarks = data['remarks']
+					order.remarks = remarks
 					order.approval1 = 'Accepted'
 				order.save()
 				return HttpResponseRedirect("/approve_orders")
@@ -368,12 +367,12 @@ def prof_decision(request,order_id,prof_hash):
 	if decisionform.is_valid():
 		data = decisionform.cleaned_data
 		decision = data['decision']
+		remarks = data['remarks']
 		if decision == "Reject":
-			reason = data['reason']
 			order.approval1 = 'Rejected'
 			order.approval2 = 'Rejected'
 			order.approval3 = 'Rejected'
-			order.reason = reason
+			order.remarks1 = remarks
 			current_site = get_current_site(request)
 			hash_mail = hashlib.md5(order.mail)
 			message =  "Hello \r\n\r\n Your Workshop order is rejected by your reference professor.Please use below link to find detials and track your order status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
@@ -382,7 +381,7 @@ def prof_decision(request,order_id,prof_hash):
 			email = EmailMessage(mail_subject, message, to=[to_email])
 			email.send()
 		else:
-			order.reason = reason
+			order.remarks1 = remarks
 			order.approval1 = 'Accepted'
 			current_site = get_current_site(request)
 			hash_mail = hashlib.md5(order.mail)
