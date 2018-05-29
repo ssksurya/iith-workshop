@@ -6,7 +6,7 @@ from .models import Order, Approver, Status
 # Register your models here.
 
 class DisplayOrder(admin.ModelAdmin):
-	list_display = ('name','mail','mobile','title','work','worktype','work','file','prof_name','prof_mail','approval1','approval2','approval3','completed','reason')
+	list_display = ('name','mail','mobile','title','work','worktype','work','file','prof_name','prof_mail','approval1','approval2','approval3','completed','remarks1','remarks2','remarks3')
 
 class DisplayApprover(admin.ModelAdmin):
 	list_display = ('approver2','approver3')

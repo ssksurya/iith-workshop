@@ -56,8 +56,8 @@ CHOICES1=[('Accecpt','Accecpt'),
 class DecisionForm(forms.Form):
 	decision = forms.ChoiceField(choices=CHOICES1, widget=forms.RadioSelect(attrs=
     	{'name':"result",'id':"result",'class':'radio-inline'}))
-	reason = forms.CharField(required=False,widget = forms.Textarea(attrs=
-		{'name':'reason','id':'reason','placeholder':"Please mention the reason if rejected",'class':'form-control form-control-lg'}))
+	remarks = forms.CharField(required=False,widget = forms.Textarea(attrs=
+		{'name':'remarks','id':'remarks','placeholder':"Reamarks",'class':'form-control form-control-lg'}))
 
 CHOICES2=[('Yes','Yes'),
 		('No','No')]
