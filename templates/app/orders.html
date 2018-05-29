@@ -22,7 +22,9 @@
 		        <th scope="col">APPROVAL 1</th>
 		        <th scope="col">APPROVAL 2</th>
 		        <th scope="col">APPROVAL 3</th>
+		        {% if user.is_authenticated %}
 		        <th scope="col">DETAILS</th>
+		        {% endif %}
 		    </tr>
 	    </thead>
 	    <tbody>
@@ -101,10 +103,13 @@
 						</div>
 					</td>
 				{% endifequal %}
+
+				{% if user.is_authenticated %}
 				<td>
 					<a href="/detail/{{ order.id }}">Details</a>
 					
 				</td>
+				{% endif %}
 		    </tr>
 		    {% endfor %}
 		    {% else %}

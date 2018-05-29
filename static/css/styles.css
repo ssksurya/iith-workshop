@@ -78,3 +78,7 @@ label {
 	border: solid #ffffff 1px;
 	transition-duration: 0.5s;
 }
+
+li {
+	margin: 1;
+}
