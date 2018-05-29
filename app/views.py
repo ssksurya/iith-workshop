@@ -42,11 +42,17 @@ def order(request):
 				order = Order.objects.get(name=data['name'],title = data['title'],prof_mail = data['prof_mail'])
 				try:
 					current_site = get_current_site(request)
-					hash_object = hashlib.md5(order.prof_mail)
-					message =  "Dear Sir/Madam \r\n\r\n You have a Workshop order to approve.Please click on the link below to find detials and approve it. \r\n\r\n" + current_site.domain + '/' + 'order_decision' +'/' + str(order.id) + '/' + hash_object.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
+					hash_prof = hashlib.md5(order.prof_mail)
+					message =  "Dear Sir/Madam \r\n\r\n You have a Workshop order to approve.Please click on the link below to find detials and approve it. \r\n\r\n" + current_site.domain + '/' + 'order_decision' +'/' + str(order.id) + '/' + hash_prof.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
 					mail_subject = 'IITH Workshop Workorder Approval'
 					to_email = data['prof_mail']
 					email = EmailMessage(mail_subject, message, to=[to_email])
+					email.send()
+					hash_mail = hashlib.md5(order.mail)
+					message2 =  "Hello \r\n\r\n You have submitted a Workshop order.Please use below link to find detials and track your order status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
+					mail_subject2 = 'IITH Workshop Workorder'
+					to_email2 = data['mail']
+					email = EmailMessage(mail_subject2, message2, to=[to_email2])
 					email.send()
 				except Exception,e:
 					print str(e)
@@ -54,7 +60,7 @@ def order(request):
 					order.delete()
 					message = "There is something wrong.Try again later"
 					return render(request,'app/form.html',{'form':form,'message':message})
-				return HttpResponseRedirect("/")
+				return HttpResponseRedirect("/orders")
 			except Exception as e:
 				print e
 				message = "There is something wrong.Try again later"
@@ -216,14 +222,26 @@ def decision(request,order_id):
 			if decisionform.is_valid():
 				data = decisionform.cleaned_data
 				decision = data['decision']
-				print decision
 				if decision == "Reject":
 					reason = data['reason']
 					order.approval2 = 'Rejected'
 					order.approval3 = 'Rejected'
 					order.reason = reason
+					hash_mail = hashlib.md5(order.mail)
+					message =  "Hello \r\n\r\n Your Workshop order is rejected by Central Workshop.Please use below link to find detials and track your order status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
+					mail_subject = 'IITH Workshop Workorder'
+					to_email = data['mail']
+					email = EmailMessage(mail_subject, message, to=[to_email])
+					email.send()
 				else:
+					order.reason = reason
 					order.approval2 = 'Accepted'
+					hash_mail = hashlib.md5(order.mail)
+					message =  "Hello \r\n\r\n Your Workshop order is approved by Central Workshop Staff.Please use below link to find detials and track your order status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
+					mail_subject = 'IITH Workshop Workorder'
+					to_email = data['mail']
+					email = EmailMessage(mail_subject, message, to=[to_email])
+					email.send()
 				order.save()
 				return HttpResponseRedirect("/approve_orders")
 			else:
@@ -237,8 +255,21 @@ def decision(request,order_id):
 					reason = data['reason']
 					order.approval3 = 'Rejected'
 					order.reason = reason
+					hash_mail = hashlib.md5(order.mail)
+					message =  "Hello \r\n\r\n Your Workshop order is rejected by Central Workshop Faculty Team.Please use below link to find detials and track your order status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
+					mail_subject = 'IITH Workshop Workorder'
+					to_email = data['mail']
+					email = EmailMessage(mail_subject, message, to=[to_email])
+					email.send()
 				else:
+					order.reason = reason
 					order.approval3 = 'Accepted'
+					hash_mail = hashlib.md5(order.mail)
+					message =  "Hello \r\n\r\n Your Workshop order is approved by Central Workshop Faculty Team.Please use below link to find detials and track your order status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
+					mail_subject = 'IITH Workshop Workorder'
+					to_email = data['mail']
+					email = EmailMessage(mail_subject, message, to=[to_email])
+					email.send()
 				order.save()
 				return HttpResponseRedirect("/approve_orders")
 			else:
@@ -255,6 +286,7 @@ def decision(request,order_id):
 					order.approval3 = 'Rejected'
 					order.reason = reason
 				else:
+					order.reason = reason
 					order.approval1 = 'Accepted'
 				order.save()
 				return HttpResponseRedirect("/approve_orders")
@@ -273,7 +305,6 @@ def update_status(request,order_id):
 			statusform = StatusForm(request.POST)
 			if statusform.is_valid():
 				data = statusform.cleaned_data
-				
 				status_input = data['status_input']
 				completed_input = data['completed_input']
 				new_object = Status()
@@ -281,8 +312,20 @@ def update_status(request,order_id):
 				new_object.status_text = status_input
 				if completed_input=="Yes":
 					order.completed = True
+					hash_mail = hashlib.md5(order.mail)
+					message =  "Hello \r\n\r\n Your Workshop order has been completed.Please use below link to find detials and track your order status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
+					mail_subject = 'IITH Workshop Workorder'
+					to_email = data['mail']
+					email = EmailMessage(mail_subject, message, to=[to_email])
+					email.send()
 				else:
 					order.completed = False
+					hash_mail = hashlib.md5(order.mail)
+					message =  "Hello \r\n\r\n There is a update on your Workshop Order.Please use below link to find detials and track your order status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
+					mail_subject = 'IITH Workshop Workorder'
+					to_email = data['mail']
+					email = EmailMessage(mail_subject, message, to=[to_email])
+					email.send()
 				new_object.save()
 				order.save()
 				return HttpResponseRedirect("/status_list")
@@ -319,14 +362,35 @@ def prof_decision(request,order_id,prof_hash):
 			order.approval2 = 'Rejected'
 			order.approval3 = 'Rejected'
 			order.reason = reason
+			hash_mail = hashlib.md5(order.mail)
+			message =  "Hello \r\n\r\n Your Workshop order is rejected by your reference professor.Please use below link to find detials and track your order status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
+			mail_subject = 'IITH Workshop Workorder'
+			to_email = data['mail']
+			email = EmailMessage(mail_subject, message, to=[to_email])
+			email.send()
 		else:
+			order.reason = reason
 			order.approval1 = 'Accepted'
-			order.save()
+			hash_mail = hashlib.md5(order.mail)
+			message =  "Hello \r\n\r\n Your Workshop order is approved by your reference professor.Please use below link to find detials and track your order status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
+			mail_subject = 'IITH Workshop Workorder'
+			to_email = data['mail']
+			email = EmailMessage(mail_subject, message, to=[to_email])
+			email.send()
 		order.save()
+
 		return render(request,'app/recorded.html')
 	else:
 		return render(request,'app/decision.html',{'order':order,'decisionform':decisionform,'prof_hash':prof_hash})
 
+def detail_hash(request,order_id,mail_hash):
+	order = Order.objects.get(id= order_id)
+	hash_object = hashlib.md5(order.mail)
+	if hash_object.hexdigest() == mail_hash:
+		status_list = Status.objects.filter(order=order_id)
+		return render(request,'app/detail.html',{'order':order,'status_list':status_list})
+	else:
+		return HttpResponse("Something wrong")
 
 
 
