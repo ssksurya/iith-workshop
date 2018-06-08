@@ -59,7 +59,7 @@
 	    </div>
     </div>
     <div class="form-group row">
-	    <label for="name" class="col-sm-4">APPROVAL1 : </label>
+	    <label for="name" class="col-sm-4">APPROVAL1(Guide/Incharge) : </label>
 	    {% ifequal 'Pending' order.approval1 %}			      	
       		<div class="alert alert-primary" role="alert">
 			  {{ order.approval1 }}
@@ -91,7 +91,7 @@
     
     
     <div class="form-group row">
-	    <label for="name" class="col-sm-4">APPROVAL2 : </label>
+	    <label for="name" class="col-sm-4">APPROVAL2 (Workshop Technical Team) : </label>
 	    {% ifequal 'Pending' order.approval2 %}			      	
       		<div class="alert alert-primary" role="alert">
 			  {{ order.approval2 }}
@@ -121,7 +121,7 @@
     </div>
 
     <div class="form-group row">
-	    <label for="name" class="col-sm-4">APPROVAL3 : </label>
+	    <label for="name" class="col-sm-4">APPROVAL3 (Workshop Faculty Incharge) : </label>
 	    {% ifequal 'Pending' order.approval3 %}			      	
       		<div class="alert alert-primary" role="alert">
 			  {{ order.approval3 }}

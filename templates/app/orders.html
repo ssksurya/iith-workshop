@@ -4,11 +4,15 @@
 {% include "base.html" %}
 <h2 style="text-align: center;margin-top: 2%;color: #5a5a5a">{{ category }}</h2>
 <div class="container" style="width: 80%;margin-top: 1%;">
-	<a href="/orders" ><button class="btn btn-lg">ALL ORDERS</button></a>
-	<a href="/pending_orders"><button class="btn btn-lg">PENDING ORDERS</button></a>
-	<a href="/approved_orders"><button class="btn btn-lg">APPROVED ORDERS</button></a>
-	<a href="/completed_orders"><button class="btn btn-lg">COMPLETED ORDERS</button></a>
+
+	{% if user.is_authenticated %}
+	<a href="/orders" ><button class="btn btn-lg">ALL WORK ORDERS</button></a>
+	<a href="/pending_orders"><button class="btn btn-lg">UNAPPROVED ORDERS</button></a>
 	<a href="/rejected_orders"><button class="btn btn-lg">REJECTED ORDERS</button></a>
+	{% endif %}
+	<a href="/approved_orders"><button class="btn btn-lg">PENDING ORDERS</button></a>
+	<a href="/completed_orders"><button class="btn btn-lg">COMPLETED ORDERS</button></a>
+	
 </div>
 <div style="width: 80%;margin: auto;">
 	<table class="table">
