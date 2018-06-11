@@ -34,7 +34,13 @@
 	    border-radius: 5px;
 	    
 	}
-
+		
+	
+	label[for=result_2]
+	{
+	    display: none;
+	    
+	}
 	{% if user.is_authenticated %}
 	{% ifequal user.get_username approver.approver2 %}
 	label[for=result_2]
@@ -47,13 +53,7 @@
 	    border-radius: 5px;
 	    
 	}
-	
-	{% else %}
-	label[for=result_2]
-	{
-	    display: none;
-	    
-	}
+
 	{% endifequal %}
 	{% endif %}
 </style>
