@@ -8,6 +8,7 @@ STATUS_CHOICES = (
 	('Accepted','Accepted'),
 	('Rejected','Rejected'),
 	('Pending','Pending'),
+	('May be','May be'),
 )
 class Order(models.Model):
 	name = models.TextField(max_length=100,blank=True)

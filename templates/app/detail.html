@@ -5,61 +5,61 @@
 
 <div class="container" style="text-align: center;margin-top: 2%;margin-bottom: 5%;">
 	<div class="form-group row">
-	    <label for="name" class="col-sm-4">NAME : </label>
-	    <div class="col-sm-8">
+	    <label for="name" class="col-sm-5">NAME : </label>
+	    <div class="col-sm-7">
 	    	<p class="info">{{ order.name }}</p>
 	    </div>
     </div>
     <div class="form-group row">
-	    <label for="name" class="col-sm-4">EMAIL : </label>
-	    <div class="col-sm-8">
+	    <label for="name" class="col-sm-5">EMAIL : </label>
+	    <div class="col-sm-7">
 	    	<p class="info">{{ order.mail }}</p>
 	    </div>
     </div>
     <div class="form-group row">
-	    <label for="name" class="col-sm-4">MOBILE : </label>
-	    <div class="col-sm-8">
+	    <label for="name" class="col-sm-5">MOBILE : </label>
+	    <div class="col-sm-7">
 	    	<p class="info">{{ order.mobile }}</p>
 	    </div>
     </div>
     <div class="form-group row">
-	    <label for="name" class="col-sm-4">WORK ORDER TITLE : </label>
-	    <div class="col-sm-8">
+	    <label for="name" class="col-sm-5">WORK ORDER TITLE : </label>
+	    <div class="col-sm-7">
 	    	<p class="info">{{ order.title }}</p>
 	    </div>
     </div>
     <div class="form-group row">
-	    <label for="name" class="col-sm-4">WORK DESCRIPTION : </label>
-	    <div class="col-sm-8">
+	    <label for="name" class="col-sm-5">WORK DESCRIPTION : </label>
+	    <div class="col-sm-7">
 	    	<p class="info">{{ order.work }}</p>
 	    </div>
     </div>
     <div class="form-group row">
-	    <label for="name" class="col-sm-4">FILE : </label>
-	    <div class="col-sm-8">
+	    <label for="name" class="col-sm-5">FILE : </label>
+	    <div class="col-sm-7">
 	    	<p class="info"><a href="/media/{{ order.file }}">{{ order.file }}</a></p>
 	    </div>
     </div>
     <div class="form-group row">
-	    <label for="name" class="col-sm-4">WORK TYPE : </label>
-	    <div class="col-sm-8">
+	    <label for="name" class="col-sm-5">WORK TYPE : </label>
+	    <div class="col-sm-7">
 	    	<p class="info">{{ order.worktype }}</p>
 	    </div>
     </div>
     <div class="form-group row">
-	    <label for="name" class="col-sm-4">REFERENCE PROFESSOR NAME : </label>
-	    <div class="col-sm-8">
+	    <label for="name" class="col-sm-5">NAME OF GUIDE/INCHARGE: </label>
+	    <div class="col-sm-7">
 	    	<p class="info">{{ order.prof_name }}</p>
 	    </div>
     </div>
     <div class="form-group row">
-	    <label for="name" class="col-sm-4">REFERENCE PROFESSOR EMAIL : </label>
-	    <div class="col-sm-8">
+	    <label for="name" class="col-sm-5">EMAIL OF GUIDE/INCHARGE: </label>
+	    <div class="col-sm-7">
 	    	<p class="info">{{ order.prof_mail }}</p>
 	    </div>
     </div>
     <div class="form-group row">
-	    <label for="name" class="col-sm-4">APPROVAL1(Guide/Incharge) : </label>
+	    <label for="name" class="col-sm-5">APPROVAL1(Guide/Incharge) : </label>
 	    {% ifequal 'Pending' order.approval1 %}			      	
       		<div class="alert alert-primary" role="alert">
 			  {{ order.approval1 }}
@@ -78,7 +78,7 @@
 	</div>
 	
 	<div class="form-group row">
-	<label for="name" class="col-sm-4">REMARKS 1 : </label>
+	<label for="name" class="col-sm-5">REMARKS 1 : </label>
 	<div class="alert alert-light" role="alert">
 	{% ifequal '' order.remarks1 %}
 	--
@@ -87,11 +87,9 @@
 	{% endifequal %}
 	</div>
     </div>
-	
-    
     
     <div class="form-group row">
-	    <label for="name" class="col-sm-4">APPROVAL2 (Workshop Technical Team) : </label>
+	    <label for="name" class="col-sm-5">APPROVAL2 (Workshop Technical Team) : </label>
 	    {% ifequal 'Pending' order.approval2 %}			      	
       		<div class="alert alert-primary" role="alert">
 			  {{ order.approval2 }}
@@ -99,6 +97,11 @@
 		{% endifequal %}
 		{% ifequal 'Accepted' order.approval2 %}
       		<div class="alert alert-success" role="alert">
+			  {{ order.approval2 }}
+			</div>
+		{% endifequal %}
+		{% ifequal 'May be' order.approval2 %}
+      		<div class="alert alert-warning" role="alert">
 			  {{ order.approval2 }}
 			</div>
 		{% endifequal %}
@@ -110,7 +113,7 @@
     </div>
 
     <div class="form-group row">
-	<label for="name" class="col-sm-4">REMARKS 2 : </label>
+	<label for="name" class="col-sm-5">REMARKS 2 : </label>
 	<div class="alert alert-light" role="alert">
 	{% ifequal '' order.remarks2 %}
 	--
@@ -121,7 +124,7 @@
     </div>
 
     <div class="form-group row">
-	    <label for="name" class="col-sm-4">APPROVAL3 (Workshop Faculty Incharge) : </label>
+	    <label for="name" class="col-sm-5">APPROVAL3 (Workshop Faculty Incharge) : </label>
 	    {% ifequal 'Pending' order.approval3 %}			      	
       		<div class="alert alert-primary" role="alert">
 			  {{ order.approval3 }}
@@ -140,7 +143,7 @@
     </div>
 
     <div class="form-group row">
-	<label for="name" class="col-sm-4">REMARKS 3 : </label>
+	<label for="name" class="col-sm-5">REMARKS 3 : </label>
 	<div class="alert alert-light" role="alert">
 	{% ifequal '' order.remarks3 %}
 	--
@@ -153,14 +156,14 @@
     {% if status_list %}
     {% for status in status_list %}
     <div class="form-group row">
-	    <label for="name" class="col-sm-4">STATUS : </label>
-	    <div class="col-sm-8">
+	    <label for="name" class="col-sm-5">STATUS : </label>
+	    <div class="col-sm-7">
 	    	<p class="info">{{ status.status_text }}</p>
 	    </div>
     </div>
     {% endfor %}
     <div class="form-group row">
-	    <label for="name" class="col-sm-4">COMPLETED : </label>
+	    <label for="name" class="col-sm-5">COMPLETED : </label>
 	    <div class="col-mg-8">
 		    <div>
 		    	{% if order.completed %}

@@ -34,6 +34,28 @@
 	    border-radius: 5px;
 	    
 	}
+
+	{% if user.is_authenticated %}
+	{% ifequal user.get_username approver.approver2 %}
+	label[for=result_2]
+	{
+	    color: #856404;
+	    background-color: #fff3cd;
+	    margin-left:5%;
+	    margin-right: 5%;
+	    padding: 1%;
+	    border-radius: 5px;
+	    
+	}
+	
+	{% else %}
+	label[for=result_2]
+	{
+	    display: none;
+	    
+	}
+	{% endifequal %}
+	{% endif %}
 </style>
 <div class="container" style="text-align: center;margin-top: 2%;margin-bottom: 1%;">
 	<div class="form-group row">
@@ -79,18 +101,35 @@
 	    </div>
     </div>
     <div class="form-group row">
-	    <label for="name" class="col-sm-4">REFERENCE PROFESSOR NAME : </label>
+	    <label for="name" class="col-sm-4">NAME OF GUIDE/INCHARGE : </label>
 	    <div class="col-sm-8">
 	    	<p class="info">{{ order.prof_name }}</p>
 	    </div>
     </div>
     <div class="form-group row">
-	    <label for="name" class="col-sm-4">REFERENCE PROFESSOR EMAIL : </label>
+	    <label for="name" class="col-sm-4">EMAIL OF GUIDE/INCHARGE : </label>
 	    <div class="col-sm-8">
 	    	<p class="info">{{ order.prof_mail }}</p>
 	    </div>
     </div>
-</div>
+    {% if user.is_authenticated %}
+	{% ifequal user.get_username approver.approver3 %}
+    <div class="form-group row">
+	    <label for="name" class="col-sm-4">APPROVER 2 DECISION : </label>
+	    {% ifequal 'Accepted' order.approval2 %}
+      		<div class="alert alert-success" role="alert">
+			  {{ order.approval2 }}
+			</div>
+		{% endifequal %}
+		{% ifequal 'May be' order.approval2 %}
+      		<div class="alert alert-warning" role="alert">
+			  {{ order.approval2 }}
+			</div>
+		{% endifequal %}
+    </div>
+    {% endifequal %}
+    {% endif %}
+</div><br>
 <div class="container" style="text-align: center;margin-bottom: 5%;">
 	<form action="/decision/{{ order.id }}/{{ prof_hash }}" method="post" enctype="multipart/form-data">
 		{% csrf_token %}

@@ -43,14 +43,14 @@ def order(request):
 				try:
 					current_site = get_current_site(request)
 					hash_prof = hashlib.md5(order.prof_mail)
-					message =  "Dear Sir/Madam \r\n\r\n "+ data['name'] +" has submitted a Workorder request with you as the faculty Guide/Incharge.This work order request is awaiting your approval for further processing.Please click on the following link for detials and approval. \r\n\r\n" + current_site.domain + '/' + 'order_decision' +'/' + str(order.id) + '/' + hash_prof.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
-					mail_subject = 'IITH CWS Workorder Approval'
+					message =  "Dear Sir/Madam \r\n\r\n "+ data['name'] +" has submitted a Work request with you as the faculty Guide/Incharge.This Work request is awaiting your approval for further processing.Please click on the following link for detials and approval. \r\n\r\n" + current_site.domain + '/' + 'order_decision' +'/' + str(order.id) + '/' + hash_prof.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
+					mail_subject = 'IITH CWS Work Request Approval'
 					to_email = data['prof_mail']
 					email = EmailMessage(mail_subject, message, to=[to_email])
 					email.send()
 					hash_mail = hashlib.md5(order.mail)
-					message2 =  "Hello \r\n\r\n We have sucessfully recieved your Workorder request to Central Workshop.Please use below link for more detials and track the Work order status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
-					mail_subject2 = 'IITH CWS Workorder'
+					message2 =  "Hello \r\n\r\n We have sucessfully recieved your Work request to Central Workshop.Please use below link for more detials and track the Work request status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
+					mail_subject2 = 'IITH CWS Work request'
 					to_email2 = data['mail']
 					email = EmailMessage(mail_subject2, message2, to=[to_email2])
 					email.send()
@@ -74,17 +74,17 @@ def order(request):
 
 def all_orders(request):
 	orders = Order.objects.all().order_by('-uploaded_at')
-	category = "ALL ORDERS"
+	category = "ALL WORK REQUESTS"
 	return render(request,'app/orders.html',{'orders':orders,'category':category})
 
-def pending_orders(request):
+def unapproved_orders(request):
 	orders = Order.objects.filter(approval3="Pending").order_by('-uploaded_at')
-	category = "PENDING ORDERS"
+	category = "UNAPPROVED WORK REQUESTS"
 	return render(request,'app/orders.html',{'orders':orders,'category':category})
 
 def approved_orders(request):
 	orders = Order.objects.filter(approval3="Accepted").order_by('-uploaded_at')
-	category = "APPROVED ORDERS"
+	category = "APPROVED WORK REQUESTS"
 	return render(request,'app/orders.html',{'orders':orders,'category':category})
 
 def status_list(request):
@@ -93,12 +93,12 @@ def status_list(request):
 
 def rejected_orders(request):
 	orders = Order.objects.filter(approval3="Rejected").order_by('-uploaded_at')
-	category = "REJECTED ORDERS"
+	category = "REJECTED WORK REQUESTS"
 	return render(request,'app/orders.html',{'orders':orders,'category':category})
 
 def completed_orders(request):
 	orders = Order.objects.filter(completed=True).order_by('-uploaded_at')
-	category = "COMPLETED ORDERS"
+	category = "COMPLETED WORK REQUESTS"
 	return render(request,'app/orders.html',{'orders':orders,'category':category})
 
 
@@ -172,7 +172,7 @@ def approve_orders(request):
 			return render(request,'app/approve_orders.html',{'orders':orders})
 		elif (user.username == approver.approver3):
 			try:
-				orders = Order.objects.filter(approval1 = 'Accepted',approval2='Accepted',approval3='Pending').order_by('-uploaded_at')
+				orders = Order.objects.filter(approval1 = 'Accepted',approval2='Accepted',approval3='Pending').order_by('-uploaded_at') | Order.objects.filter(approval1 = 'Accepted',approval2='May be',approval3='Pending').order_by('-uploaded_at')
 			except:
 				orders=[]
 			return render(request,'app/approve_orders.html',{'orders':orders})
@@ -194,13 +194,13 @@ def decision_input(request,order_id):
 		prof_hash = ""
 		if (order.approval1 == 'Pending' and order.prof_mail == user.username ):
 			decisionform = DecisionForm()
-			return render(request,'app/decision.html',{'order':order,'decisionform':decisionform,'prof_hash':prof_hash})
+			return render(request,'app/decision.html',{'order':order,'decisionform':decisionform,'prof_hash':prof_hash,'approver':approver})
 		elif (order.approval1 == 'Accepted' and approver.approver2 == user.username ):
 			decisionform = DecisionForm()
-			return render(request,'app/decision.html',{'order':order,'decisionform':decisionform,'prof_hash':prof_hash})
-		elif (order.approval1 == 'Accepted' and order.approval2 == 'Accepted' and approver.approver3 == user.username):
+			return render(request,'app/decision.html',{'order':order,'decisionform':decisionform,'prof_hash':prof_hash,'approver':approver})
+		elif (order.approval1 == 'Accepted' and (order.approval2 == 'Accepted' or order.approval2 == 'May be') and approver.approver3 == user.username):
 			decisionform = DecisionForm()
-			return render(request,'app/decision.html',{'order':order,'decisionform':decisionform,'prof_hash':prof_hash})
+			return render(request,'app/decision.html',{'order':order,'decisionform':decisionform,'prof_hash':prof_hash,'approver':approver})
 		else:
 			return HttpResponseRedirect("/approve_orders")
 	else:
@@ -229,19 +229,29 @@ def decision(request,order_id):
 					order.remarks2 = remarks
 					current_site = get_current_site(request)
 					hash_mail = hashlib.md5(order.mail)
-					message =  "Hello \r\n\r\n Your Workorder request to CWS is rejected by Central Workshop Technical team.Please use below link for more detials and track the Work order status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
-					mail_subject = 'IITH CWS Workorder'
+					message =  "Hello \r\n\r\n Your Work request to CWS is rejected by Central Workshop Technical team.Please use below link for more detials and track the Work request status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
+					mail_subject = 'IITH CWS Work request'
 					to_email = order.mail
 					email = EmailMessage(mail_subject, message, to=[to_email])
 					email.send()
-				else:
+				elif decision == "May be":
 					data = decisionform.cleaned_data
 					order.remarks2 = remarks
-					order.approval2 = 'Accepted'
+					order.approval2 = 'May be'
 					current_site = get_current_site(request)
 					hash_mail = hashlib.md5(order.mail)
-					message =  "Hello \r\n\r\n Your Workorder request to CWS is approved by Central Workshop Technical team.Please use below link for more detials and track the Work order status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
-					mail_subject = 'IITH CWS Workorder'
+					message =  "Hello \r\n\r\n Your Work request to CWS is marked as 'May be' by the Central Workshop Technical team.This means that they are not sure of the feasibility of the product.It is suggested that you meet the faculty incharge of Central Workshop for further discussion on the subject..Please use below link for more detials and track the Work request status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
+					mail_subject = 'IITH CWS Work request'
+					to_email = order.mail
+					email = EmailMessage(mail_subject, message, to=[to_email])
+					email.send()
+				else:					
+					order.approval2 = 'Accepted'
+					order.remarks2 = remarks
+					current_site = get_current_site(request)
+					hash_mail = hashlib.md5(order.mail)
+					message =  "Hello \r\n\r\n Your Work request to CWS is accepted by Central Workshop Technical team.Please use below link for more detials and track the Work request status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
+					mail_subject = 'IITH CWS Work request'
 					to_email = order.mail
 					email = EmailMessage(mail_subject, message, to=[to_email])
 					email.send()
@@ -250,7 +260,7 @@ def decision(request,order_id):
 				# Your Workorder request to CWS is marked as 'May be' by the Central Workshop Technical team.This means they are not sure of the feasebility of the product.It is suggested that you meet the faculty incharge of Central Workshop for further discussion on the subject.
 			else:
 				return render(request,'app/decision.html',{'order':order,'decisionform':decisionform})
-		elif (user.username == approver.approver3 and order.approval1==	'Accepted' and order.approval2=='Accepted'):
+		elif (user.username == approver.approver3 and (order.approval2=='Accepted' or order.approval2=='May be') and order.approval1=='Accepted'):
 			decisionform = DecisionForm(request.POST)
 			if decisionform.is_valid():
 				data = decisionform.cleaned_data
@@ -261,8 +271,8 @@ def decision(request,order_id):
 					order.remarks3 = remarks
 					current_site = get_current_site(request)
 					hash_mail = hashlib.md5(order.mail)
-					message =  "Hello \r\n\r\n Your Workorder request to CWS is rejected by Central Workshop Faculty Incharge.Please use below link for more detials and track the Work order status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
-					mail_subject = 'IITH CWS Workorder'
+					message =  "Hello \r\n\r\n Your Work request to CWS is rejected by Central Workshop Faculty Incharge.Please use below link for more detials and track the Work request status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
+					mail_subject = 'IITH CWS Work request'
 					to_email = order.mail
 					email = EmailMessage(mail_subject, message, to=[to_email])
 					email.send()
@@ -273,8 +283,8 @@ def decision(request,order_id):
 					order.approval3 = 'Accepted'
 					current_site = get_current_site(request)
 					hash_mail = hashlib.md5(order.mail)
-					message =  "Hello \r\n\r\n Your Workorder request to CWS is approved by Central Workshop Faculty Incharge.Please use below link for more detials and track the Work order status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
-					mail_subject = 'IITH CWS Workorder'
+					message =  "Hello \r\n\r\n Your Work request to CWS is approved by Central Workshop Faculty Incharge.Please use below link for more detials and track the Work request status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
+					mail_subject = 'IITH CWS Work request'
 					to_email = order.mail
 					email = EmailMessage(mail_subject, message, to=[to_email])
 					email.send()
@@ -324,8 +334,8 @@ def update_status(request,order_id):
 					order.completed = True
 					current_site = get_current_site(request)
 					hash_mail = hashlib.md5(order.mail)
-					message =  "Hello \r\n\r\n Your Workshop order has been completed.Please use below link for more detials and track the Work order status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
-					mail_subject = 'IITH CWS Workorder'
+					message =  "Hello \r\n\r\n Your Workshop request has been completed. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
+					mail_subject = 'IITH CWS Work request'
 					to_email = order.mail
 					email = EmailMessage(mail_subject, message, to=[to_email])
 					email.send()
@@ -333,8 +343,8 @@ def update_status(request,order_id):
 					order.completed = False
 					current_site = get_current_site(request)
 					hash_mail = hashlib.md5(order.mail)
-					message =  "Hello \r\n\r\n There is an update to your CWS Workorder status.Please use below link for more detials and track the Work order status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
-					mail_subject = 'IITH CWS Workorder'
+					message =  "Hello \r\n\r\n There is an update to your CWS Work request status.Please use below link for more detials and track the Work order status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
+					mail_subject = 'IITH CWS Work request'
 					to_email = order.mail
 					email = EmailMessage(mail_subject, message, to=[to_email])
 					email.send()
@@ -376,8 +386,8 @@ def prof_decision(request,order_id,prof_hash):
 			order.remarks1 = remarks
 			current_site = get_current_site(request)
 			hash_mail = hashlib.md5(order.mail)
-			message =  "Hello \r\n\r\n Your Workorder request to CWS is rejected by the faculty Guide/Incharge.Please use below link for more detials and track the Work order status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
-			mail_subject = 'IITH CWS Workorder'
+			message =  "Hello \r\n\r\n Your Work request to CWS is rejected by the faculty Guide/Incharge.Please use below link for more detials and track the Work request status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
+			mail_subject = 'IITH CWS Work request'
 			to_email = order.mail
 			email = EmailMessage(mail_subject, message, to=[to_email])
 			email.send()
@@ -386,7 +396,7 @@ def prof_decision(request,order_id,prof_hash):
 			order.approval1 = 'Accepted'
 			current_site = get_current_site(request)
 			hash_mail = hashlib.md5(order.mail)
-			message =  "Hello \r\n\r\n Your Workorder request to CWS is approved by the faculty Guide/Incharge.Please use below link for more detials and track the Work order status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
+			message =  "Hello \r\n\r\n Your Work request to CWS is approved by the faculty Guide/Incharge.Please use below link for more detials and track the Work request status. \r\n\r\n" + current_site.domain  + '/details'+'/' + str(order.id) + '/' + hash_mail.hexdigest() + '/' +  "\r\n\r\nThanking You\r\nIITH CWS\r\n"
 			mail_subject = 'IITH CWS Workorder'
 			to_email = order.mail
 			email = EmailMessage(mail_subject, message, to=[to_email])
@@ -404,7 +414,7 @@ def detail_hash(request,order_id,mail_hash):
 		status_list = Status.objects.filter(order=order_id)
 		return render(request,'app/detail.html',{'order':order,'status_list':status_list})
 	else:
-		return HttpResponse("Something wrong")
+		return HttpResponse("Something went wrong !!!")
 
 
 

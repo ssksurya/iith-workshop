@@ -42,16 +42,17 @@ class orderForm(forms.Form):
 	file = forms.FileField(required=False,widget = forms.FileInput(attrs=
 		{'name':'file','id':'file','placeholder':'Upload your file','class':'form-control form-control-lg','required':'required'}))
 	prof_name = forms.CharField(widget = forms.TextInput(attrs=
-		{'name':"prof_name",'id':"prof_name",'required':'required','placeholder':"Professor Name",'class':'form-control form-control-lg'}))
+		{'name':"prof_name",'id':"prof_name",'required':'required','placeholder':"Name of Guide/Incharge",'class':'form-control form-control-lg'}))
 	prof_mail = forms.CharField(widget = forms.EmailInput(attrs=
-		{'name':"prof_mail",'id':"prof_mail",'required':'required','placeholder':"Professor Email",'class':'form-control form-control-lg'}))
+		{'name':"prof_mail",'id':"prof_mail",'required':'required','placeholder':"Email of Guide/Incharge",'class':'form-control form-control-lg'}))
 	class Meta:
 		model = Order
 		fields = ['name', 'mail','mobile','work','worktype','file','prof_name','prof_mail']
 		
 
 CHOICES1=[('Accept','Accept'),
-		('Reject','Reject')]
+		('Reject','Reject'),
+		('May be','May be')]
 
 class DecisionForm(forms.Form):
 	decision = forms.ChoiceField(choices=CHOICES1, widget=forms.RadioSelect(attrs=

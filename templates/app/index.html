@@ -1,6 +1,11 @@
 {% include "base.html" %}
 	<div class="container" style="max-width: 80%;">
 		<h1 style="text-align: center;margin-top: 1%;color: #5a5a5a;">Welcome to IITH CWS</h1>
+          
+		{% if user.is_authenticated %}
+		<br>
+			<h3 style="color: #5a5a5a;">Hi, {{ user.get_username }}</h3>
+		{% else %}
           <h2>How to use?</h2>
           <h5>
                <ul class="list">
@@ -16,15 +21,11 @@
 
                </ul>
           </h5>
-		{% if user.is_authenticated %}
-		<br>
-			<h2>Hi, {{ user.get_username }}</h2>
-			
 		{% endif %}
 		{% ifequal user.get_username approver.approver2 %}
 	    <div class="col-sm-12" style="text-align: center;">
-	    	<a href="/status_list"><button class="btn btn-lg">Update Existing Work Orders</button></a>
-          <a href="/approve_orders"><button class="btn btn-lg">Approve New Work Orders</button></a>
+	    	<a href="/status_list"><button class="btn btn-lg">Update Existing Work Requests</button></a>
+          <a href="/approve_orders"><button class="btn btn-lg">Approve New Work Requests</button></a>
 	    </div>
      	{% endifequal %}
 
