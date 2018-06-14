@@ -40,7 +40,7 @@ class orderForm(forms.Form):
 	worktype = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect(attrs=
     	{'name':"worktype",'id':"worktype",'class':'radio-inline'}))
 	file = forms.FileField(required=False,widget = forms.FileInput(attrs=
-		{'name':'file','id':'file','placeholder':'Upload your file','class':'form-control form-control-lg','required':'required'}))
+		{'name':'file','id':'file','placeholder':'Upload your file','class':'form-control form-control-lg'}))
 	prof_name = forms.CharField(widget = forms.TextInput(attrs=
 		{'name':"prof_name",'id':"prof_name",'required':'required','placeholder':"Name of Guide/Incharge",'class':'form-control form-control-lg'}))
 	prof_mail = forms.CharField(widget = forms.EmailInput(attrs=

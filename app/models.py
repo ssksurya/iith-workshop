@@ -17,7 +17,7 @@ class Order(models.Model):
 	work = models.TextField(max_length=500,blank=True)
 	worktype = models.TextField(max_length=20,blank=True)
 	title = models.TextField(max_length=100,blank=True)
-	file = models.FileField(upload_to='orders/')
+	file = models.FileField(upload_to='orders/',blank=True,null=True)
 	uploaded_at = models.DateTimeField(auto_now_add=True)
 	prof_name = models.TextField(max_length=100,blank=True)
 	prof_mail = models.TextField(max_length=100,blank=True)

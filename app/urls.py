@@ -8,7 +8,7 @@ urlpatterns = [
 	url(r'^form$', views.order),
 	url(r'^orders$', views.all_orders),
 	url(r'^unapproved_orders$', views.unapproved_orders),
-	url(r'^approved_orders$', views.approved_orders),
+	url(r'^pending_orders$', views.pending_orders),
 	url(r'^completed_orders$', views.completed_orders),
 	url(r'^rejected_orders$', views.rejected_orders),
 	url(r'^status_list$', views.status_list),

@@ -36,7 +36,9 @@ def order(request):
 				new_object.worktype = data['worktype']
 				new_object.prof_name = data['prof_name']
 				new_object.prof_mail = data['prof_mail']
-				new_object.file = request.FILES['file']
+				filepath = request.FILES.get('filepath', False)
+				if filepath:
+					new_object.file = request.FILES['file']
 				new_object.uploaded_at = localtime(now())
 				new_object.save()
 				order = Order.objects.get(name=data['name'],title = data['title'],prof_mail = data['prof_mail'])
@@ -82,9 +84,9 @@ def unapproved_orders(request):
 	category = "UNAPPROVED WORK REQUESTS"
 	return render(request,'app/orders.html',{'orders':orders,'category':category})
 
-def approved_orders(request):
+def pending_orders(request):
 	orders = Order.objects.filter(approval3="Accepted").order_by('-uploaded_at')
-	category = "APPROVED WORK REQUESTS"
+	category = "PENDING WORK REQUESTS"
 	return render(request,'app/orders.html',{'orders':orders,'category':category})
 
 def status_list(request):
