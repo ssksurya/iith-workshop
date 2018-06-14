@@ -36,7 +36,7 @@ class orderForm(forms.Form):
 	title = forms.CharField(widget = forms.TextInput(attrs=
 		{'name':"title",'id':"title",'required':'required','placeholder':"Work order title",'class':'form-control form-control-lg'}))
 	work = forms.CharField(required=False,widget = forms.Textarea(attrs=
-		{'name':'work','id':'work','required':'required','placeholder':"Work Description",'class':'form-control form-control-lg'}))
+		{'name':'work','id':'work','placeholder':"Work Description",'class':'form-control form-control-lg'}))
 	worktype = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect(attrs=
     	{'name':"worktype",'id':"worktype",'class':'radio-inline'}))
 	file = forms.FileField(required=False,widget = forms.FileInput(attrs=
