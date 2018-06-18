@@ -16,7 +16,7 @@
 		{% else %}
           <br>
           <h2 style="text-align: center;color:#5a5a5a">Workflow</h2>
-          <img id="flowchart" src = '{% static "img/workflow.jpg" %}'>
+          <img id="flowchart" src = '{% static "img/workflow.jpg" %}'><br>
 		{% endif %}
 		{% ifequal user.get_username approver.approver2 %}
 	    <div class="col-sm-12" style="text-align: center;">
