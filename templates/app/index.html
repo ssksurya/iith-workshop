@@ -1,26 +1,22 @@
 {% include "base.html" %}
+{% load static %}
+<style type="text/css">
+     #flowchart {
+         margin: auto;
+    width: 50%;
+    display: block;
+}
+</style>
 	<div class="container" style="max-width: 80%;">
 		<h1 style="text-align: center;margin-top: 1%;color: #5a5a5a;">Welcome to IITH CWS</h1>
           
 		{% if user.is_authenticated %}
 		<br>
-			<h3 style="color: #5a5a5a;">Hi, {{ user.get_username }}</h3>
+			<h2 style="color: #5a5a5a;">Hi, {{ user.get_username }}</h2>
 		{% else %}
-          <h2>How to use?</h2>
-          <h5>
-               <ul class="list">
-                    <li>To submit a work order click on 'Submit Order' button on top and fill the details. </li>
-                    <li>After submitting the form, a mail will be sent to the refernce professor (Approver 1) who can either approve or reject it. </li>
-                    <li>A link will be sent to the student for tracking status of work order.</li>
-                    <li>Workshop Staff (Approver 2) and Workshop Faculty team (Approver 3) can only approve orders when their preceeding approvers approve it.</li>
-                    <li>Approver2 and Approver3 should login to approve orders.Login is not required for submiiting orders and reference professor. </li>
-                    <li>Work order will be discarded if any one of the approver rejects it and the work order will not be forwarded to subsequent approvers.</li>
-                    <li>List of all orders can be seen by clicking on 'All orders' on the top menu.</li>
-                    <li>When all 3 approvers approves the order, Workshop staff (Approver 2) can update status regarding workorder till completion.</li>
-                    <li>Any update regarding the workorder will be informed to the student through mail.</li>
-
-               </ul>
-          </h5>
+          <br>
+          <h2 style="text-align: center;color:#5a5a5a">Workflow</h2>
+          <img id="flowchart" src = '{% static "img/workflow.jpg" %}'>
 		{% endif %}
 		{% ifequal user.get_username approver.approver2 %}
 	    <div class="col-sm-12" style="text-align: center;">

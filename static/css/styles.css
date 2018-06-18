@@ -82,3 +82,9 @@ label {
 li {
 	margin: 1;
 }
+
+#flowchart {
+	    margin: auto;
+    width: 70%;
+    display: block;
+}
