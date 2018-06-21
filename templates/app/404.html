@@ -1,26 +1,6 @@
 {% include "base.html" %}
 {% load static %}
   
-	<div class="container" style="max-width: 80%;">
-		
-          
-		{% if user.is_authenticated %}
-		<br>
-			<h2 style="color: #5a5a5a;">Hi, {{ user.get_username }}</h2>
-		{% else %}
-          <br>
-          <h2 style="text-align: center;color:#5a5a5a">Workflow</h2>
-          <img id="flowchart" src = '{% static "img/workflow.jpg" %}'><br>
-		{% endif %}
-		{% ifequal user.get_username approver.approver2 %}
-	    <div class="col-sm-12" style="text-align: center;">
-	    	<a href="/status_list"><button class="btn btn-lg">Update Existing Work Requests</button></a>
-          <a href="/approve_orders"><button class="btn btn-lg">Approve New Work Requests</button></a>
-	    </div>
-     	{% endifequal %}
-
-     	
- 	</div>
   <div>
     <h2>The webpage you requested does not exist.<a href="/">Click here</a> to go to homepage.</h2>
   </div>
