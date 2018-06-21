@@ -1,4 +1,4 @@
-#!/home/kiran/iith-workshop/env/bin/python2
+#!/home/cwsiith/iith-workshop/env/bin/python
 from django.core import management
 
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-#!/home/kiran/iith-workshop/env/bin/python
+#!/home/cwsiith/iith-workshop/env/bin/python
 
 import sys
 import getopt
