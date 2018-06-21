@@ -2,6 +2,7 @@ from . import views
 from django.conf.urls import include,url
 from django.contrib.auth.views import logout
 from django.conf.urls.static import static
+
 urlpatterns = [
 	url(r'^$', views.index),
 	url(r'^form$', views.order),

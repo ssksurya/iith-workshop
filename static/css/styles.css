@@ -2,6 +2,9 @@
 
 body {
 	font-family: 'Roboto', sans-serif;
+	min-height: 100%;
+	margin: 0;
+	padding: 0;
 }
 
 hr {
@@ -42,6 +45,7 @@ a:hover {
 	transition-duration: 0.5s;
 	border:solid white 2px;
 	outline: none;
+	font-size: 1em;
 	
 }
 
@@ -87,4 +91,48 @@ li {
 	    margin: auto;
     width: 70%;
     display: block;
+}
+
+.footer {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	background-color: lightgray;
+	padding: 0;
+	margin: 0;
+	text-align: center;
+}
+
+.footer p {
+	margin: 0;
+	padding: 0;
+}
+
+.title {
+	font-size: 2em;
+}
+
+#workflow {
+	font-size: 2em;
+	color: #5a5a5a;
+	text-align: center;
+}
+
+@media only screen and (max-width: 768px) {
+    .title  {
+        font-size: 1em;
+    }
+    .navbar-brand {
+    	width: 30%;
+    }
+    #logo {
+    	width: 100%;
+    }
+    #workflow {
+    	font-size: 1em;
+    }
+    #flowchart {
+    	min-width: 100%;
+    }
+
 }
