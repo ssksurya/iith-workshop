@@ -89,9 +89,9 @@ WSGI_APPLICATION = 'iithworkshop.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'iithworkshop',
-        'USER': 'kiran',
-        'PASSWORD': 'avrkiran',
+        'NAME': 'cwsiith',
+        'USER': 'cwsiith',
+        'PASSWORD': 'cws@iith',
         'HOST': 'localhost',
         'PORT': '',
     }
