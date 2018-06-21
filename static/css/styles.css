@@ -43,7 +43,6 @@ a:hover {
 	text-decoration: none;
 	color: #5a5a5a;
 	transition-duration: 0.5s;
-	border:solid white 2px;
 	outline: none;
 	font-size: 1em;
 	
@@ -118,7 +117,10 @@ li {
 	text-align: center;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 768px) {
+	[class*="col-"] {
+        width: 100%;
+    }
     .title  {
         font-size: 1em;
     }
@@ -136,5 +138,8 @@ li {
     }
     .container {
     	min-width: 100%;
+    }
+    label {
+    	text-align: left;
     }
 }
