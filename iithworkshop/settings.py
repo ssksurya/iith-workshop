@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
-
+from decouple import config, Csv
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -20,12 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '=4=nxv!ivhhq_z%55#qaf2j%qfwg+6bv%^_tt7w8ok(gn2o1&c'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = DEBUG = config('DEBUG', default=False, cast=bool) 
 
-ALLOWED_HOSTS = ['206.189.176.65','127.0.0.1']
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
 
 # Application definition
@@ -71,6 +71,14 @@ TEMPLATES = [
     },
 ]
 
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.11/howto/static-files/
+
+STATIC_PATH = os.path.join(BASE_DIR,'static')
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [ STATIC_PATH, ]
+#STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 WSGI_APPLICATION = 'iithworkshop.wsgi.application'
 
@@ -123,12 +131,6 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.11/howto/static-files/
-
-STATIC_PATH = os.path.join(BASE_DIR,'static')
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [ STATIC_PATH, ]
 
 #media
 MEDIA_URL = '/media/'
@@ -137,9 +139,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 #Mail
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'cws_workorders@iith.ac.in'
-EMAIL_HOST_PASSWORD = 'cws@workorders'
-EMAIL_PORT = 587
+EMAIL_BACKEND = config('EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_PORT = config('EMAIL_PORT', cast=int)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)

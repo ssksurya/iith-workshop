@@ -1,7 +1,7 @@
 (function($) {
     'use strict';
     $(function() {
-        $('.cancel-link').on('click', function(e) {
+        $('.cancel-link').click(function(e) {
             e.preventDefault();
             window.history.back();
         });
