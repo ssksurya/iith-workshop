@@ -14,7 +14,7 @@
 			<h2 style="color: #5a5a5a;">Hi, {{ user.get_username }}</h2>
 		{% else %}
           <br>
-          <h1 style="text-align: center;color:#5a5a5a">Workflow</h1>
+          <h1 id="workflow">WORKFLOW</h1>
           <img id="flowchart" src = '{% static "img/workflow.jpg" %}'><br>
 		{% endif %}
 		{% ifequal user.get_username approver.approver2 %}

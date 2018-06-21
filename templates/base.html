@@ -16,15 +16,17 @@
 
 </head>
 <body>
-	<nav class="navbar navbar-expand-lg">
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<a class="navbar-brand" href="iith.ac.in">
 			<img src="https://www.iith.ac.in/wp-content/uploads/2018/02/horzlogolong.png" id ="logo" class="d-inline-block align-top" alt="">
 		</a>
-		<a class="heading" class="navbar-brand" href="/"><h1>IITH CENTRAL WORKSHOP</h1></a>
-	  	
-	  	<div class="collapse navbar-collapse " id="navbarTogglerDemo01">
-	  		
-		    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+		<a class="heading" class="navbar-brand" href="/"><h1 class="title">IITH CENTRAL WORKSHOP</h1></a>
+	  	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	  	</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		    <ul class="navbar-nav mr-auto">
 		    	<li class="nav-item active">
 		        	<a class="nav-link" href="/form">SUBMIT WORK REQUEST<span class="sr-only">(current)</span></a>
 		      	</li>
@@ -45,10 +47,9 @@
 					{% else %}
 			     		<a class="nav-link" href="/login">LOGIN</a>
 			     	{% endif %}
-			     </li>
-
+			     </li>	      
 		    </ul>
+		  
 		</div>
-
 	</nav>
 	<hr>
