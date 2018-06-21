@@ -14,6 +14,8 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 import hashlib
+from django.shortcuts import render_to_response
+from django.template import RequestContext
 # Create your views here.
 
 def index(request):
@@ -419,6 +421,11 @@ def detail_hash(request,order_id,mail_hash):
 		return HttpResponse("Something went wrong !!!")
 
 
+def handler404(request):
+    response = render_to_response('404.html', {},
+                              context_instance=RequestContext(request))
+    response.status_code = 404
+    return response
 
 
 
