@@ -67,17 +67,17 @@
     <div class="form-group row">
 	    <label for="name" class="col-sm-5">APPROVAL1(Guide/Incharge) : </label>
 	    {% ifequal 'Pending' order.approval1 %}			      	
-      		<div class="alert alert-primary" role="alert">
+      		<div class="alert alert-primary col-sm-7" role="alert">
 			  {{ order.approval1 }}
 			</div>					
 		{% endifequal %}
 		{% ifequal 'Accepted' order.approval1 %}
-      		<div class="alert alert-success" role="alert">
+      		<div class="alert alert-success col-sm-7" role="alert">
 			  {{ order.approval1 }}
 			</div>
 		{% endifequal %}
 		{% ifequal 'Rejected' order.approval1 %}
-      		<div class="alert alert-danger" role="alert">
+      		<div class="alert alert-danger col-sm-7" role="alert">
 			  {{ order.approval1 }}
 			</div>
 		{% endifequal %}
@@ -85,7 +85,7 @@
 	
 	<div class="form-group row">
 	<label for="name" class="col-sm-5">REMARKS 1 : </label>
-	<div class="alert alert-light" role="alert">
+	<div class="alert alert-light col-sm-7" role="alert">
 	{% ifequal '' order.remarks1 %}
 	--
 	{% else %}
@@ -97,22 +97,22 @@
     <div class="form-group row">
 	    <label for="name" class="col-sm-5">APPROVAL2 (Workshop Technical Team) : </label>
 	    {% ifequal 'Pending' order.approval2 %}			      	
-      		<div class="alert alert-primary" role="alert">
+      		<div class="alert alert-primary col-sm-7" role="alert">
 			  {{ order.approval2 }}
 			</div>					
 		{% endifequal %}
 		{% ifequal 'Accepted' order.approval2 %}
-      		<div class="alert alert-success" role="alert">
+      		<div class="alert alert-success col-sm-7" role="alert">
 			  {{ order.approval2 }}
 			</div>
 		{% endifequal %}
 		{% ifequal 'May be' order.approval2 %}
-      		<div class="alert alert-warning" role="alert">
+      		<div class="alert alert-warning col-sm-7" role="alert">
 			  {{ order.approval2 }}
 			</div>
 		{% endifequal %}
 		{% ifequal 'Rejected' order.approval2 %}
-      		<div class="alert alert-danger" role="alert">
+      		<div class="alert alert-danger col-sm-7" role="alert">
 			  {{ order.approval2 }}
 			</div>
 		{% endifequal %}
@@ -120,7 +120,7 @@
 
     <div class="form-group row">
 	<label for="name" class="col-sm-5">REMARKS 2 : </label>
-	<div class="alert alert-light" role="alert">
+	<div class="alert alert-light col-sm-7" role="alert">
 	{% ifequal '' order.remarks2 %}
 	--
 	{% else %}
@@ -132,17 +132,17 @@
     <div class="form-group row">
 	    <label for="name" class="col-sm-5">APPROVAL3 (Workshop Faculty Incharge) : </label>
 	    {% ifequal 'Pending' order.approval3 %}			      	
-      		<div class="alert alert-primary" role="alert">
+      		<div class="alert alert-primary col-sm-7" role="alert">
 			  {{ order.approval3 }}
 			</div>					
 		{% endifequal %}
 		{% ifequal 'Accepted' order.approval3 %}
-      		<div class="alert alert-success" role="alert">
+      		<div class="alert alert-success col-sm-7" role="alert">
 			  {{ order.approval3 }}
 			</div>
 		{% endifequal %}
 		{% ifequal 'Rejected' order.approval3 %}
-      		<div class="alert alert-danger" role="alert">
+      		<div class="alert alert-danger col-sm-7" role="alert">
 			  {{ order.approval3 }}
 			</div>
 		{% endifequal %}
@@ -150,7 +150,7 @@
 
     <div class="form-group row">
 	<label for="name" class="col-sm-5">REMARKS 3 : </label>
-	<div class="alert alert-light" role="alert">
+	<div class="alert alert-light col-sm-7" role="alert">
 	{% ifequal '' order.remarks3 %}
 	--
 	{% else %}
