@@ -13,6 +13,7 @@ urlpatterns = [
 	url(r'^completed_orders$', views.completed_orders),
 	url(r'^rejected_orders$', views.rejected_orders),
 	url(r'^status_list$', views.status_list),
+	url(r'^status_completed_list$', views.status_completed_list),
 	url(r'^login/$', views.login_menu),
 	url(r'^do_login$', views.do_login),
 	url(r'^do_register$', views.do_register),

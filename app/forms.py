@@ -66,7 +66,7 @@ CHOICES2=[('Yes','Yes'),
 class StatusForm(forms.Form):
 	status_input = forms.CharField(required=True,widget = forms.Textarea(attrs=
 		{'name':'status_input','id':'status_input','placeholder':"Please enter the status here",'class':'form-control form-control-lg'}))
-	completed_input = forms.ChoiceField(choices=CHOICES2, widget=forms.RadioSelect(attrs=
+	completed_input = forms.ChoiceField(required=False,choices=CHOICES2, widget=forms.RadioSelect(attrs=
     	{'name':"completed_input",'id':"completed_input",'class':'radio-inline'}))
 
 	

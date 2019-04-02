@@ -20,7 +20,8 @@
 		{% ifequal user.get_username approver.approver2 %}
 	    <div class="col-sm-12" style="text-align: center;">
 	    	<a href="/status_list"><button class="btn btn-lg">Update Existing Work Requests</button></a>
-          <a href="/approve_orders"><button class="btn btn-lg">Approve New Work Requests</button></a>
+          	<a href="/status_completed_list"><button class="btn btn-lg">Update Completed Work Requests</button></a>
+		<a href="/approve_orders"><button class="btn btn-lg">Approve New Work Requests</button></a>
 	    </div>
      	{% endifequal %}
 
