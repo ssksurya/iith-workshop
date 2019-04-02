@@ -1,0 +1,31 @@
+#+TITLE:     CWS-IITH
+#+AUTHOR:    A.V.Ravi kiran
+#+EMAIL:     me15btech11039@iith.ac.in
+
+#+DESCRIPTION: This is a website created for CWS at IITH for requesting work orders.
+
+** About
+
+
+This is a website created for CWS at IITH for requesting work orders.
+
+
+** Tools and Softwares used
+
+- Python-Django
+- HTML
+- Bootstraps (CSS & Js)
+- PostgreSQL
+- Linux (Operating system)
+
+** Installation Guide
+*** For local PC
+
+- Clone this repository into your PC 
+- Make sure you hane .env with proper settings and passwords
+- Open terminal and navigate to cloned repositiory and execute following commands
+
+```console
+foo@bar:~$ whoami
+foo
+```
