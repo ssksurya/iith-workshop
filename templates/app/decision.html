@@ -71,7 +71,13 @@
 	    	<p class="info">{{ order.mail }}</p>
 	    </div>
     </div>
-    <div class="form-group row">
+   <div class="form-group row">
+	    <label for="name" class="col-sm-4">DATE : </label>
+	    <div class="col-sm-8">
+	    	<p class="info">{{ order.uploaded_at|date:"d M Y" }}</p>
+	    </div>
+    </div> 
+   <div class="form-group row">
 	    <label for="name" class="col-sm-4">MOBILE : </label>
 	    <div class="col-sm-8">
 	    	<p class="info">{{ order.mobile }}</p>
@@ -92,7 +98,7 @@
     <div class="form-group row">
 	    <label for="name" class="col-sm-4">FILE : </label>
 	    <div class="col-sm-8">
-	    	<p class="info"><a href="{{ order.file }}">{{ order.file }}</a></p>
+	    	<p class="info"><a href="/media/{{ order.file }}">{{ order.file }}</a></p>
 	    </div>
     </div>
     <div class="form-group row">
@@ -113,11 +119,47 @@
 	    	<p class="info">{{ order.prof_mail }}</p>
 	    </div>
     </div>
-    {% if user.is_authenticated %}
-	{% ifequal user.get_username approver.approver3 %}
+    
+	{% if user.is_authenticated %}
+			
     <div class="form-group row">
-	    <label for="name" class="col-sm-4">APPROVER 2 DECISION : </label>
-	    {% ifequal 'Accepted' order.approval2 %}
+	    <label for="name" class="col-sm-4">APPROVAL1(Guide/Incharge) : </label>
+	    {% ifequal 'Pending' order.approval1 %}			      	
+      		<div class="alert alert-primary" role="alert">
+			  {{ order.approval1 }}
+			</div>					
+		{% endifequal %}
+		{% ifequal 'Accepted' order.approval1 %}
+      		<div class="alert alert-success" role="alert">
+			  {{ order.approval1 }}
+			</div>
+		{% endifequal %}
+		{% ifequal 'Rejected' order.approval1 %}
+      		<div class="alert alert-danger" role="alert">
+			  {{ order.approval1 }}
+			</div>
+		{% endifequal %}
+	</div>
+	
+	<div class="form-group row">
+	<label for="name" class="col-sm-4">REMARKS 1 : </label>
+	<div class="alert alert-light" role="alert">
+	{% ifequal '' order.remarks1 %}
+	--
+	{% else %}
+	{{ order.remarks1 }}
+	{% endifequal %}
+	</div>
+    </div>
+	{% ifequal user.get_username approver.approver3 %}    
+    <div class="form-group row">
+	    <label for="name" class="col-sm-4">APPROVAL2 (Workshop Technical Team) : </label>
+	    {% ifequal 'Pending' order.approval2 %}			      	
+      		<div class="alert alert-primary" role="alert">
+			  {{ order.approval2 }}
+			</div>					
+		{% endifequal %}
+		{% ifequal 'Accepted' order.approval2 %}
       		<div class="alert alert-success" role="alert">
 			  {{ order.approval2 }}
 			</div>
@@ -127,10 +169,27 @@
 			  {{ order.approval2 }}
 			</div>
 		{% endifequal %}
+		{% ifequal 'Rejected' order.approval2 %}
+      		<div class="alert alert-danger" role="alert">
+			  {{ order.approval2 }}
+			</div>
+		{% endifequal %}
+    </div>
+
+    <div class="form-group row">
+	<label for="name" class="col-sm-4">REMARKS 2 : </label>
+	<div class="alert alert-light" role="alert">
+	{% ifequal '' order.remarks2 %}
+	--
+	{% else %}
+	{{ order.remarks2 }}
+	{% endifequal %}
+	</div>
     </div>
     {% endifequal %}
     {% endif %}
 </div><br>
+
 <div class="container" style="text-align: center;margin-bottom: 5%;">
 	<form action="/decision/{{ order.id }}/{{ prof_hash }}" method="post" enctype="multipart/form-data">
 		{% csrf_token %}
@@ -151,4 +210,7 @@
 	    </div>
 	</form>
 </div>
+
 {% include "footer.html" %}
+
+

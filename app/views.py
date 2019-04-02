@@ -49,11 +49,10 @@ def order(request):
 				new_object.prof_name = data['prof_name']
 				new_object.prof_mail = data['prof_mail']
 				filepath = request.FILES.get('filepath', False)
-				if filepath:
-					new_object.file = request.FILES['file']
+				new_object.file = request.FILES['file']
 				new_object.uploaded_at = localtime(now())
 				new_object.save()
-				order = Order.objects.get(name=data['name'],title = data['title'],prof_mail = data['prof_mail'])
+				order = Order.objects.get(id=new_object.id)
 				try:
 					current_site = get_current_site(request)
 					hash_prof = hashlib.md5(order.prof_mail)
@@ -70,13 +69,15 @@ def order(request):
 					email.send()
 				except Exception,e:
 					print str(e)
-					order = Order.objects.get(name=data['name'],title = data['title'],prof_mail = data['prof_mail'])
+					order = Order.objects.get(id=new_object.id)
 					order.delete()
 					message = "There is something wrong.Try again later"
 					return render(request,'app/form.html',{'form':form,'message':message})
 				return HttpResponseRedirect("/orders")
 			except Exception as e:
 				print e
+				order = Order.objects.get(id=new_object.id)
+				order.delete()
 				message = "There is something wrong.Try again later"
 				return render(request,'app/form.html',{'form':form,'message':message})
 		else:
@@ -103,7 +104,11 @@ def pending_orders(request):
 
 def status_list(request):
 	orders = Order.objects.filter(approval3="Accepted",completed=False).order_by('-uploaded_at')
-	return render(request,'app/status_list.html',{'orders':orders})
+	return render(request,'app/status_list.html',{'orders':orders,'type':"UPDATE EXISTING WORK REQUEST"})
+
+def status_completed_list(request):
+	orders = Order.objects.filter(approval3="Accepted",completed=True).order_by('-uploaded_at')
+	return render(request,'app/status_list.html',{'orders':orders,'type':"UPDATE COMPLETED WORK REQUEST"})
 
 def rejected_orders(request):
 	orders = Order.objects.filter(approval3="Rejected").order_by('-uploaded_at')
@@ -293,7 +298,7 @@ def decision(request,order_id):
 				else:
 					data = decisionform.cleaned_data
 					remarks3 = data['remarks']
-					order.remarks = remarks
+					order.remarks3 = remarks
 					order.approval3 = 'Accepted'
 					current_site = get_current_site(request)
 					hash_mail = hashlib.md5(order.mail)
@@ -344,6 +349,9 @@ def update_status(request,order_id):
 				new_object = Status()
 				new_object.order = order_id
 				new_object.status_text = status_input
+				if order.completed == True:
+					new_object.save()
+					return HttpResponseRedirect("/")
 				if completed_input=="Yes":
 					order.completed = True
 					current_site = get_current_site(request)
@@ -366,7 +374,7 @@ def update_status(request,order_id):
 				order.save()
 				return HttpResponseRedirect("/status_list")
 			else:
-				return render(request,'app/status_form.html',{'statusform':statusform})
+				return render(request,'app/status_form.html',{'statusform':statusform,'order':order})
 		else:
 			statusform = StatusForm()
 			return render(request,'app/status_form.html',{'statusform':statusform,'order':order})
@@ -382,7 +390,7 @@ def prof_decision_form(request,order_id,prof_hash):
 			decisionform = DecisionForm()
 			return render(request,'app/decision.html',{'order':order,'decisionform':decisionform,'prof_hash':prof_hash})
 		else:
-			return HttpResponseRedirect("/orders")
+			return HttpResponseRedirect("/detail/"+order_id)
 	else:
 		return HttpResponse("Something wrong")
 

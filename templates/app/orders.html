@@ -19,7 +19,8 @@
 	    <thead>
 		    <tr>
 		        <th scope="col">S.No</th>
-		        <th scope="col">NAME</th>
+		        <th scope="col">Date</th>
+			<th scope="col">NAME</th>
 		        <th scope="col">EMAIL</th>
 		        <th scope="col">TITLE</th>
 		        <th scope="col">APPROVER</th>
@@ -37,6 +38,7 @@
 
 		    <tr>
 		        <td>{{ forloop.counter }}</td>
+			<td>{{ order.uploaded_at|date:"d M Y" }}</td> 
 		      	<td>{{ order.name }}</td>
 		      	<td>{{ order.mail }}</td>
 		      	<td>{{ order.title }}</td>		      	
