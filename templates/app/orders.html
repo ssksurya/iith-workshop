@@ -132,5 +132,32 @@
 		    {% endif %}
 	    </tbody>
 	</table>
+
 </div>
+
+<nav aria-label="Page navigation example">
+{% if orders.has_other_pages %}
+  <ul class="pagination justify-content-center">
+    {% if orders.has_previous %}
+      <li class="page-item"><a class="page-link" href="?page={{ orders.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="page-item disabled"><a class="page-link"><span>&laquo;</span></a></li>
+    {% endif %}
+    {% for i in orders.paginator.page_range %}
+      {% if orders.number == i %}
+        <li class="page-item active"><a class="page-link"> <span>{{ i }} <span class="sr-only">(current)</span></span></a></li>
+      {% else %}
+        <li page-item><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if orders.has_next %}
+      <li page-item><a class="page-link" href="?page={{ orders.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled page-item"><a class="page-link"><span>&raquo;</span></a></li>
+    {% endif %}
+  </ul>
+{% endif %}
+</nav>
+
+	
 {% include "footer.html" %}

@@ -9,6 +9,8 @@ from .forms import orderForm,LoginForm,RegisterForm , DecisionForm , StatusForm
 from .models import Order, Approver , Status
 
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.utils.timezone import localtime, now
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
@@ -88,35 +90,92 @@ def order(request):
 		return render(request,'app/form.html',{'form':form})
 
 def all_orders(request):
-	orders = Order.objects.all().order_by('-uploaded_at')
+	orders_list = Order.objects.all().order_by('-uploaded_at')
+	page = request.GET.get('page')
+	paginator = Paginator(orders_list, 20)
+	try:
+		orders = paginator.page(page)
+	except PageNotAnInteger:
+		orders = paginator.page(1)
+	except EmptyPage:
+		orders = paginator.page(paginator.num_pages)
 	category = "ALL WORK REQUESTS"
+
 	return render(request,'app/orders.html',{'orders':orders,'category':category})
 
 def unapproved_orders(request):
-	orders = Order.objects.filter(approval3="Pending").order_by('-uploaded_at')
+	orders_list = Order.objects.filter(approval3="Pending").order_by('-uploaded_at')
+	page = request.GET.get('page')
+	paginator = Paginator(orders_list, 20)
+	try:
+		orders = paginator.page(page)
+	except PageNotAnInteger:
+		orders = paginator.page(1)
+	except EmptyPage:
+		orders = paginator.page(paginator.num_pages)
 	category = "UNAPPROVED WORK REQUESTS"
 	return render(request,'app/orders.html',{'orders':orders,'category':category})
 
 def pending_orders(request):
-	orders = Order.objects.filter(approval3="Accepted").order_by('-uploaded_at')
+	orders_list = Order.objects.filter(approval3="Accepted").order_by('-uploaded_at')
+	page = request.GET.get('page')
+	paginator = Paginator(orders_list, 20)
+	try:
+		orders = paginator.page(page)
+	except PageNotAnInteger:
+		orders = paginator.page(1)
+	except EmptyPage:
+		orders = paginator.page(paginator.num_pages)
 	category = "PENDING WORK REQUESTS"
 	return render(request,'app/orders.html',{'orders':orders,'category':category})
 
 def status_list(request):
-	orders = Order.objects.filter(approval3="Accepted",completed=False).order_by('-uploaded_at')
+	orders_list = Order.objects.filter(approval3="Accepted",completed=False).order_by('-uploaded_at')
+	page = request.GET.get('page')
+	paginator = Paginator(orders_list, 20)
+	try:
+		orders = paginator.page(page)
+	except PageNotAnInteger:
+		orders = paginator.page(1)
+	except EmptyPage:
+		orders = paginator.page(paginator.num_pages)
 	return render(request,'app/status_list.html',{'orders':orders,'type':"UPDATE EXISTING WORK REQUEST"})
 
 def status_completed_list(request):
-	orders = Order.objects.filter(approval3="Accepted",completed=True).order_by('-uploaded_at')
+	orders_list = Order.objects.filter(approval3="Accepted",completed=True).order_by('-uploaded_at')
+	page = request.GET.get('page')
+	paginator = Paginator(orders_list, 20)
+	try:
+		orders = paginator.page(page)
+	except PageNotAnInteger:
+		orders = paginator.page(1)
+	except EmptyPage:
+		orders = paginator.page(paginator.num_pages)
 	return render(request,'app/status_list.html',{'orders':orders,'type':"UPDATE COMPLETED WORK REQUEST"})
 
 def rejected_orders(request):
-	orders = Order.objects.filter(approval3="Rejected").order_by('-uploaded_at')
+	orders_list = Order.objects.filter(approval3="Rejected").order_by('-uploaded_at')
+	page = request.GET.get('page')
+	paginator = Paginator(orders_list, 20)
+	try:
+		orders = paginator.page(page)
+	except PageNotAnInteger:
+		orders = paginator.page(1)
+	except EmptyPage:
+		orders = paginator.page(paginator.num_pages)
 	category = "REJECTED WORK REQUESTS"
 	return render(request,'app/orders.html',{'orders':orders,'category':category})
 
 def completed_orders(request):
-	orders = Order.objects.filter(completed=True).order_by('-uploaded_at')
+	orders_list = Order.objects.filter(completed=True).order_by('-uploaded_at')
+	page = request.GET.get('page')
+	paginator = Paginator(orders_list, 20)
+	try:
+		orders = paginator.page(page)
+	except PageNotAnInteger:
+		orders = paginator.page(1)
+	except EmptyPage:
+		orders = paginator.page(paginator.num_pages)
 	category = "COMPLETED WORK REQUESTS"
 	return render(request,'app/orders.html',{'orders':orders,'category':category})
 
