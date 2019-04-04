@@ -174,19 +174,47 @@ urlpatterns = [
  
 *** templates
  - app
-  + 404.html
-  + approve_orders.html
-  + decision.html
-  + detail.html
-  + form.html
-  + index.html
-  + login.html
-  + orders.html
-  + pending_orders.html
-  + recorded.html
-  + status_form.html
-  + status_list.html
- - base.html
- - footer.html
+  + 404.html \- 404 page
+  
+  
+  + approve_orders.html \- Display orders to be approved
+  
+  + decision.html \- Displays decision form for approvers
+  
+  
+  + detail.html \- Displays full details of a order
+  
+  
+  
+  
+  + form.html \- Displays order form
+  
+  
+  + index.html \- Displays homepage
+  
+  
+  + login.html \- Displays login form
+  
+  
+  + orders.html \- Displays all orders
+  
+  
+  + pending_orders.html \- orders which are approved but not yet completed 
+  
+  
+  + recorded.html \- Displays the message that response in recorded
+  
+  
+  + status_form.html \- Displays the form for status update 
+  
+  
+  + status_list.html \- Displays all the status updates of an order
+  
+  
+ - base.html \- Contain all the base HTML (CSS and Js links)
+ 
+ 
+ - footer.html \- Contain the footer
  
 *** .env
+- Contains all the settings values and passwords which are used in settings.py (CONFIDENTIAL)
