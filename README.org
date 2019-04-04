@@ -1,0 +1,220 @@
+#+TITLE:     CWS-IITH
+#+AUTHOR:    A.V.Ravi kiran
+#+EMAIL:     me15btech11039@iith.ac.in
+
+#+DESCRIPTION: This is a website created for CWS at IITH for requesting work orders.
+
+** About
+
+
+This is a website created for CWS at IITH for requesting work orders.
+
+
+** Tools and Softwares used
+
+- Python-Django
+- HTML
+- Bootstraps (CSS & Js)
+- PostgreSQL
+- Linux (Operating system)
+
+** Installation Guide
+*** For local PC
+
+- Clone this repository into your PC 
+- Make sure you hane .env with proper settings and passwords
+- Open terminal and navigate to cloned repositiory and execute following commands
+
+#+begin_src org :eval never-export
+$ python manage.py makemigartaions
+$ python manage.py migrate
+#+end_src
+
+-  Create superuser for admin login
+
+#+begin_src org :eval never-export
+$ python manage.py createsuperuser
+#+end_src
+
+- Run server
+
+#+begin_src org :eval never-export
+$ python manage.py runserver
+#+end_src
+
+- Open admin site in browser (http://127.0.0.1:8000/admin) and login
+- Opn Approvers table, click on Add Approver and add Approver2 (Technical Team) and Approver3 (Faculty Incharge)
+- Go to home site (http://127.0.0.1:8000)
+
+*** For server
+- Refer this link of DigitalOcean to setup the website on production server
++ https://www.digitalocean.com/community/tutorials/how-to-set-up-django-with-postgres-nginx-and-gunicorn-on-ubuntu-16-04
+
+** File Structure
+*** app
+ - admin.py \- Register models so that they can be displayed in admin
+ 
+ 
+ - apps.py \- Registers apps that are created
+ 
+ 
+ - forms.py \- Define all the forms that are needed.
+  * LoginForm \- Form used for login of approver2 and approver3
+  * RegisterForm \- Registration of approver2 and approver3 (one time only)
+  * orderForm \- Form for details of work order
+  * DecisionForm \- Form for making decisions regarding work order (for approvers)
+  * StatuForm \- Form for making status updates (only for approver2)
+  
+  
+ - models.py \- Define all the models used for website
+  * Order \- Stores all the orders
+  * Approver \- STores mail id's of approver2 and approver3
+  * Status \- Stores all the status of work orders
+  
+  
+ - tests.py \- Can be used for testing purposes
+ 
+ 
+ - urls.py \- Match the urls with their corresponding function in views.py
+ #+begin_src org :eval never-export
+urlpatterns = [
+	url(r'^$', views.index),
+	url(r'^form$', views.order),
+	url(r'^form$', views.order),
+	url(r'^orders$', views.all_orders),
+	url(r'^unapproved_orders$', views.unapproved_orders),
+	url(r'^pending_orders$', views.pending_orders),
+	url(r'^completed_orders$', views.completed_orders),
+	url(r'^rejected_orders$', views.rejected_orders),
+	url(r'^status_list$', views.status_list),
+	url(r'^status_completed_list$', views.status_completed_list),
+	url(r'^login/$', views.login_menu),
+	url(r'^do_login$', views.do_login),
+	url(r'^do_register$', views.do_register),
+	url(r'logout', logout, {'next_page': '/'}),
+	url(r'^approve_orders$', views.approve_orders),
+	url(r'^detail/(?P<order_id>[0-9]+)/$',views.detail),
+	url(r'^order_decision/(?P<order_id>[0-9]+)/$',views.decision_input),
+	url(r'^decision/(?P<order_id>[0-9]+)/$', views.decision),
+	url(r'^update_status/(?P<order_id>[0-9]+)/$', views.update_status),
+	url(r'^order_decision/(?P<order_id>[0-9]+)/(?P<prof_hash>[0-9A-Za-z_\-]+)/$',views.prof_decision_form),
+	url(r'^decision/(?P<order_id>[0-9]+)/(?P<prof_hash>[0-9A-Za-z_\-]+)$', views.prof_decision),
+	url(r'^details/(?P<order_id>[0-9]+)/(?P<mail_hash>[0-9A-Za-z_\-]+)/$', views.detail_hash),
+] 
+#+end_src
+
+ 
+ - views.py \- Specify what each function should do.(Get data from models,render templates, login,logout ....)
+ 
+  + handler404 \- renders default 404 page
+  
+  + handler500 \- renders default 500 page
+  
+  + index \- Renders hompage and it is diferrent for user and approver
+  
+  + order \- Renders order form and if order form is submitted, order is stored in database and mail is sent to respective       user and respective faculty member for approval.
+  
+  + all_orders \- Displays the list of all orders at 20 per page (only for approvers)
+  
+  + unapproved_orders \- Displays the list of orders which are yet to be approved at 20 per page (only for approvers)
+  
+  + pending_orders \- Displays the list of orders which are approved but not yet completed at 20 per page (only for       approvers)
+  
+  + status_list \- Displays the list of orders which are approved so that approver2 can update the status
+  
+  + status_completed_list \- Displays the list of approved orders so that approver2 can update the status to completed
+  
+  + rejected_orders \- Displays the list of rejected orders
+  
+  + completed_orders \- Displays the list of completed orders
+  
+  + login_menu \- Displys the login menu
+  
+  + do_login \- login the approver
+  
+  + do_register \- register the approve
+  
+  + approve_orders \- Displays the orders to be approved for approver2 and approver3
+  
+  + decision_input \- Displays the decision form for the approvers
+  
+  + detail \- Displays the full details of work order
+  
+  + decision \- Stores the decision and remarks of approvers on work order
+  
+  + update_staus \- Stores the status of work orders  ade by approver2
+  
+  + prof_decision_form \- Displays the form for coresponding faculty when he click the link in the mail
+  
+  + prof_decision \- Stores the decision of coressponding faculty memmber
+  
+  + detail_hash \- decode the hashed url sent to corresponding faculty member in mail and show the details
+  
+*** env
+- Contains all the files required for creating virtual envinorment
+
+*** iithworkshop
+ - settings.py \- This file contains all the passwords for databse,mails and other important settings
+ - urls.py \- Matches the urls with repective apps
+ 
+*** media/orders
+ - This folder contains all the pdf's uploaded by users
+ 
+*** static
+ - admin \- This folder contains all css and js file required for admin page
+ 
+ 
+ - css \- This folder contains all css files required for website
+ 
+ 
+ - img \- This folder contains all image files required for website
+ 
+ 
+ - js \- This folder contains all js files required for website
+ 
+*** templates
+ - app
+  + 404.html \- 404 page
+  
+  
+  + approve_orders.html \- Display orders to be approved
+  
+  + decision.html \- Displays decision form for approvers
+  
+  
+  + detail.html \- Displays full details of a order
+  
+  
+  
+  
+  + form.html \- Displays order form
+  
+  
+  + index.html \- Displays homepage
+  
+  
+  + login.html \- Displays login form
+  
+  
+  + orders.html \- Displays all orders
+  
+  
+  + pending_orders.html \- orders which are approved but not yet completed 
+  
+  
+  + recorded.html \- Displays the message that response in recorded
+  
+  
+  + status_form.html \- Displays the form for status update 
+  
+  
+  + status_list.html \- Displays all the status updates of an order
+  
+  
+ - base.html \- Contain all the base HTML (CSS and Js links)
+ 
+ 
+ - footer.html \- Contain the footer
+ 
+*** .env
+- Contains all the settings values and passwords which are used in settings.py (CONFIDENTIAL)
